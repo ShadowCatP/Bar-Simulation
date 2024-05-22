@@ -29,10 +29,11 @@ public class Simulation {
     public void printState(int iteration, String customerType) {
         System.out.println("Iteration: " + iteration);
         for (Customer customer : customers) {
-            if (customerType == null || customer.getBehavior().getClass().getSimpleName().equals(customerType) || customer.getName().equals(customerType)) {
-                System.out.println("Customer: " + customer.getName() + " Drunkenness: "
-                        + customer.getDrunkenness()
-                        + " Resistance: " + customer.getResistance());
+            if (customer.getDrunkenness() <= 100.0 && (customerType == null || customer.getBehavior().getClass().getSimpleName().equals(customerType) || customer.getName().equals(customerType))) {
+                System.out.println("Customer: " + customer.getName()
+                        + " Drunkenness: " + customer.getDrunkenness()
+                        + " Resistance: " + customer.getResistance()
+                        + " Current Beer: " + (customer.getCurrentBeer() != null ? customer.getCurrentBeer().getName() : "None"));
             }
         }
     }

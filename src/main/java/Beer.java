@@ -28,14 +28,6 @@ public class Beer {
         return strength;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
     public static Vector<Beer> getBeers() {
         return beers;
     }

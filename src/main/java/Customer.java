@@ -5,7 +5,8 @@ public class Customer {
     private double resistance;
     private double drunkenness;
     private Behavior behavior;
-    DecimalFormat numberFormat = new DecimalFormat("#.00");
+    private DecimalFormat numberFormat = new DecimalFormat("#.00");
+    private Beer currentBeer;
 
     public Customer (String name, double resistance, Behavior behavior) {
         this.name = name;
@@ -17,6 +18,7 @@ public class Customer {
         if (beer == null || drunkenness >= 100.0) {
             return;
         }
+        currentBeer = beer;
         drunkenness += beer.getStrength() * resistance;
         drunkenness = Double.parseDouble(numberFormat.format(drunkenness));
     }
@@ -39,5 +41,9 @@ public class Customer {
 
     public void setDrunkenness(double drunkenness) {
         this.drunkenness = drunkenness;
+    }
+
+    public Beer getCurrentBeer() {
+        return currentBeer;
     }
 }

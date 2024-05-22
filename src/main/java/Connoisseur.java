@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Connoisseur implements Behavior {
     private Beer lastBeer = null;
-    private int sameBeerCount = 0;
+    private int sameBeerCount = 1;
     @Override
     public Beer chooseBeer(List<Beer> beers) {
         if (sameBeerCount < 3 && lastBeer != null) {

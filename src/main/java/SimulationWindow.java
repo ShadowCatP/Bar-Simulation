@@ -42,7 +42,7 @@ public class SimulationWindow extends JFrame {
         }
 
         Simulation simulation = new Simulation(customers, Beer.getBeers());
-        simulation.run(30, null);
+        simulation.run(10, "Regular");
     }
 
     public static void main(String[] args) {
