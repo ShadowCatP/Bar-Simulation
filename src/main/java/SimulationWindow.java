@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class SimulationWindow extends JFrame {
     private JTextArea textArea;
@@ -27,14 +28,24 @@ public class SimulationWindow extends JFrame {
 
     private void startSimulation() {
         // TODO Initialize the simulation
+        Beer.createBeers();
+
+        Random rand = new Random();
+        List<Customer> customers = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            double resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            customers.add(new Customer("Regular_" + (i + 1), resistance, new Regular()));
+            resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            customers.add(new Customer("Connoisseur_" + (i + 1), resistance, new Connoisseur()));
+            resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            customers.add(new Customer("Drunkard_" + (i + 1), resistance, new Drunkard()));
+        }
+
+        Simulation simulation = new Simulation(customers, Beer.getBeers());
+        simulation.run(30, null);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new SimulationWindow().setVisible(true);
-            }
-        });
+        SwingUtilities.invokeLater(() -> new SimulationWindow().setVisible(true));
     }
 }

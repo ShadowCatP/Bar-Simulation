@@ -1,4 +1,17 @@
+import java.util.Vector;
+
 public class Beer {
+
+    static Vector<Beer> beers;
+
+    static void createBeers() {
+        // TODO implement beer creation here
+        beers = new Vector<Beer>();
+        beers.add(new Beer("Corona Light", 8));
+        beers.add(new Beer("Heineken", 12));
+        beers.add(new Beer("Blackout Stout", 17));
+        beers.add(new Beer("Guinness",22));
+    }
     private String name;
     private int strength;
 
@@ -21,5 +34,9 @@ public class Beer {
 
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+
+    public static Vector<Beer> getBeers() {
+        return beers;
     }
 }

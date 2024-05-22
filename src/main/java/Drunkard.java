@@ -16,9 +16,6 @@ public class Drunkard implements Behavior {
                 counter = 0;
             }
             return null;
-        } else if (counter < 5) {
-            counter++;
-            return null;
         } else {
             counter = 0;
             Random rand = new Random();
@@ -28,6 +25,7 @@ public class Drunkard implements Behavior {
 
     public void remove() {
         removed = true;
+        counter = 0;
     }
 
     public boolean isRemoved() {
