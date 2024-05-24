@@ -33,8 +33,9 @@ public class SimulationWindow extends JFrame {
 
         Random rand = new Random();
         List<Customer> customers = new ArrayList<>();
+        double resistance;
         for (int i = 0; i < 6; i++) {
-            double resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
             customers.add(new Customer("Regular_" + (i + 1), resistance, new Regular()));
             resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
             customers.add(new Customer("Connoisseur_" + (i + 1), resistance, new Connoisseur()));

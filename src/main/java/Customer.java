@@ -7,7 +7,7 @@ public class Customer {
     private double resistance;
     private double drunkenness;
     private Behavior behavior;
-    private DecimalFormat numberFormat = new DecimalFormat("#.00");
+    private DecimalFormat numberFormat;
     private Beer currentBeer;
 
     public Customer (String name, double resistance, Behavior behavior) {
