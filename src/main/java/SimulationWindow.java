@@ -9,8 +9,8 @@ public class SimulationWindow extends JFrame {
     private JButton startButton;
     private JScrollPane scrollPane;
     private static int numberOfIterations;
-    private static int minResistance;
-    private static int maxResistance;
+    private static double minResistance;
+    private static double maxResistance;
     private static String customerType;
 
     public SimulationWindow(int numberOfIterations, int minResistance, int maxResistance, String customerType) {
@@ -31,8 +31,8 @@ public class SimulationWindow extends JFrame {
         add(startButton, BorderLayout.SOUTH);
 
         this.numberOfIterations = numberOfIterations;
-        this.minResistance = minResistance;
-        this.maxResistance = maxResistance;
+        this.minResistance = minResistance / 100.0;
+        this.maxResistance = maxResistance / 100.0;
         this.customerType = customerType;
     }
 
@@ -44,11 +44,11 @@ public class SimulationWindow extends JFrame {
         List<Customer> customers = new ArrayList<>();
         double resistance;
         for (int i = 0; i < 6; i++) {
-            resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            resistance = minResistance + (maxResistance - minResistance) * rand.nextDouble();
             customers.add(new Customer("Regular_" + (i + 1), resistance, new Regular()));
-            resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            resistance = minResistance + (maxResistance - minResistance) * rand.nextDouble();
             customers.add(new Customer("Connoisseur_" + (i + 1), resistance, new Connoisseur()));
-            resistance = 0.7 + (1.0 - 0.7) * rand.nextDouble();
+            resistance = minResistance + (maxResistance - minResistance) * rand.nextDouble();
             customers.add(new Customer("Drunkard_" + (i + 1), resistance, new Drunkard()));
         }
 
