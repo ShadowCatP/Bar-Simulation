@@ -8,9 +8,12 @@ public class SimulationWindow extends JFrame {
     private JTextArea textArea;
     private JButton startButton;
     private JScrollPane scrollPane;
+    private static int numberOfIterations;
+    private static int minResistance;
+    private static int maxResistance;
+    private static String customerType;
 
-    public SimulationWindow() {
-
+    public SimulationWindow(int numberOfIterations, int minResistance, int maxResistance, String customerType) {
         setTitle("Simulation Window");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,7 +27,13 @@ public class SimulationWindow extends JFrame {
 
         startButton = new JButton("Start Simulation");
         startButton.addActionListener(e -> startSimulation());
+        startButton.setFocusable(false);
         add(startButton, BorderLayout.SOUTH);
+
+        this.numberOfIterations = numberOfIterations;
+        this.minResistance = minResistance;
+        this.maxResistance = maxResistance;
+        this.customerType = customerType;
     }
 
     private void startSimulation() {
@@ -44,10 +53,6 @@ public class SimulationWindow extends JFrame {
         }
 
         Simulation simulation = new Simulation(customers, Beer.getBeers());
-        simulation.run(10, "Regular");
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new SimulationWindow().setVisible(true));
+        simulation.run(numberOfIterations, customerType);
     }
 }

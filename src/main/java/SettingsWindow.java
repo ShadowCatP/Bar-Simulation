@@ -2,12 +2,14 @@ import javax.swing.*;
 
 // Settings window should have settings for the simulations such as the number of iterations,
 // a range slider for minimal and maximal resistance for each type of customer, a fitness proportionate selection slider for distribution of chances
-// to pick a beer (will do later) for a customer and a button to proceed to the simulation window with settings applied.
+// to pick a beer (will do later) for a customer, a dropBox if user wants to filter the output to show only selected type of customer
+// and a button to proceed to the simulation window with settings applied.
 public class SettingsWindow extends JFrame {
     private JTextField iterationsField;
     private JSlider minResistanceSlider;
     private JSlider maxResistanceSlider;
     private JButton proceedButton;
+    private JComboBox<String> customerTypeComboBox;
 
     SettingsWindow() {
         setTitle("Settings");
@@ -52,12 +54,19 @@ public class SettingsWindow extends JFrame {
             int iterations = Integer.parseInt(iterationsField.getText());
             int minResistance = minResistanceSlider.getValue();
             int maxResistance = maxResistanceSlider.getValue();
-            new SimulationWindow().setVisible(true);
+            String customerType = (String) customerTypeComboBox.getSelectedItem();
+            new SimulationWindow(iterations, minResistance, maxResistance, customerType).setVisible(true);
             dispose();
         });
         proceedButton.setFocusable(false);
         add(proceedButton).setBounds(10, 210, 100, 30);
         //-----------------/Proceed button-----------------
+
+        //-----------------Customer type dropBox-----------------
+        add(new JLabel("Customer type:")).setBounds(10, 240, 150, 30);
+        customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard"});
+        add(customerTypeComboBox).setBounds(10, 270, 150, 30);
+        //-----------------/Customer type dropBox-----------------
     }
 
 
