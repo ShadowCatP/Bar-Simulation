@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.List;
 
 public class Simulation {
@@ -29,7 +28,7 @@ public class Simulation {
     public void printState(int iteration, String customerType) {
         System.out.println("Iteration: " + iteration);
         for (Customer customer : customers) {
-            if (customer.getDrunkenness() <= 100.0 && (customerType == null || customer.getBehavior().getClass().getSimpleName().equals(customerType) || customer.getName().equals(customerType))) {
+            if (customer.getDrunkenness() <= 100.0 && (customerType.equals("All") || customer.getBehavior().getClass().getSimpleName().equals(customerType) || customer.getName().equals(customerType))) {
                 System.out.println("Customer: " + customer.getName()
                         + " Drunkenness: " + customer.getDrunkenness()
                         + " Resistance: " + customer.getResistance()
