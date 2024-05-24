@@ -10,6 +10,7 @@ public class SimulationWindow extends JFrame {
     private JScrollPane scrollPane;
 
     public SimulationWindow() {
+
         setTitle("Simulation Window");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
