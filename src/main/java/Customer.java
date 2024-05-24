@@ -9,6 +9,7 @@ public class Customer {
     private Behavior behavior;
     private DecimalFormat numberFormat;
     private Beer currentBeer;
+    private boolean isRemoved;
 
     public Customer (String name, double resistance, Behavior behavior) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
@@ -21,6 +22,7 @@ public class Customer {
 
     public void drink(Beer beer) {
         if (beer == null || drunkenness >= 100.0) {
+            isRemoved = true;
             return;
         }
         currentBeer = beer;
@@ -50,5 +52,9 @@ public class Customer {
 
     public Beer getCurrentBeer() {
         return currentBeer;
+    }
+
+    public boolean isRemoved() {
+        return isRemoved;
     }
 }
