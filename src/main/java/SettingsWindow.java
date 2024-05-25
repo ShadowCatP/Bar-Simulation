@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 // to pick a beer (will do later) for a customer, a dropBox if user wants to filter the output to show only selected type of customer
 // and a button to proceed to the simulation window with settings applied.
 
-public class SettingsWindow extends JFrame implements ActionListener {
+public class SettingsWindow extends JFrame {
     private JTextField iterationsField;
     private JSlider minResistanceSlider;
     private JSlider maxResistanceSlider;
@@ -16,34 +16,6 @@ public class SettingsWindow extends JFrame implements ActionListener {
     private JComboBox<String> customerTypeComboBox;
     private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50;
     private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50;
-
-    public void actionPerformed(ActionEvent event)
-    {
-        if (event.getSource() == saveButton)
-        {
-            if (customerTypeComboBox.getSelectedItem() == "Regular") {
-                minRegResistance = minResistanceSlider.getValue();
-                maxRegResistance = maxResistanceSlider.getValue();
-            }
-            else if (customerTypeComboBox.getSelectedItem() == "Connoisseur") {
-                minConnResistance = minResistanceSlider.getValue();
-                maxConnResistance = maxResistanceSlider.getValue();
-            }
-            else if (customerTypeComboBox.getSelectedItem() == "Drunkard") {
-                minDrunkardResistance = minResistanceSlider.getValue();
-                maxDrunkardResistance = maxResistanceSlider.getValue();
-            }
-            else {
-                minRegResistance = minResistanceSlider.getValue();
-                maxRegResistance = maxResistanceSlider.getValue();
-                minConnResistance = minResistanceSlider.getValue();
-                maxConnResistance = maxResistanceSlider.getValue();
-                minDrunkardResistance = minResistanceSlider.getValue();
-                maxDrunkardResistance = maxResistanceSlider.getValue();
-            }
-        }
-    };
-
 
     SettingsWindow()
     {
@@ -88,7 +60,28 @@ public class SettingsWindow extends JFrame implements ActionListener {
 
         saveButton = new JButton("Save");
         saveButton.setBounds(150, 210, 100, 30);
-        saveButton.addActionListener(this);
+        saveButton.addActionListener(e -> {
+            if (customerTypeComboBox.getSelectedItem() == "Regular") {
+                minRegResistance = minResistanceSlider.getValue();
+                maxRegResistance = maxResistanceSlider.getValue();
+            }
+            else if (customerTypeComboBox.getSelectedItem() == "Connoisseur") {
+                minConnResistance = minResistanceSlider.getValue();
+                maxConnResistance = maxResistanceSlider.getValue();
+            }
+            else if (customerTypeComboBox.getSelectedItem() == "Drunkard") {
+                minDrunkardResistance = minResistanceSlider.getValue();
+                maxDrunkardResistance = maxResistanceSlider.getValue();
+            }
+            else {
+                minRegResistance = minResistanceSlider.getValue();
+                maxRegResistance = maxResistanceSlider.getValue();
+                minConnResistance = minResistanceSlider.getValue();
+                maxConnResistance = maxResistanceSlider.getValue();
+                minDrunkardResistance = minResistanceSlider.getValue();
+                maxDrunkardResistance = maxResistanceSlider.getValue();
+            }
+        });
         add(saveButton);
 
         //-----------------/Save button-----------------
@@ -98,10 +91,12 @@ public class SettingsWindow extends JFrame implements ActionListener {
 
         proceedButton = new JButton("Proceed");
         proceedButton.addActionListener(e -> {
-            int iterations = Integer.parseInt(iterationsField.getText());
-            String customerType = (String) customerTypeComboBox.getSelectedItem();
-
-            new SimulationWindow(iterations, minRegResistance, minConnResistance, minDrunkardResistance, maxRegResistance, maxConnResistance, maxDrunkardResistance, customerType).setVisible(true);
+            new SimulationWindow(
+                    Integer.parseInt(iterationsField.getText()),
+                    minRegResistance, minConnResistance, minDrunkardResistance,
+                    maxRegResistance, maxConnResistance, maxDrunkardResistance,
+                    (String) customerTypeComboBox.getSelectedItem()
+            ).setVisible(true);
             dispose();
         });
         proceedButton.setFocusable(false);
