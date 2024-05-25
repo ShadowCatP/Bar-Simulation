@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,8 +19,7 @@ public class SettingsWindow extends JFrame {
     private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50;
     private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50;
 
-    SettingsWindow()
-    {
+    SettingsWindow() {
         setTitle("Settings");
         setSize(1000, 800);
         setLayout(null);
@@ -42,6 +43,14 @@ public class SettingsWindow extends JFrame {
         minResistanceSlider.setPaintLabels(true);
         minResistanceSlider.setSnapToTicks(true);
         add(minResistanceSlider).setBounds(10, 70, 300, 50);
+        minResistanceSlider.addChangeListener(new ChangeListener()
+        {
+            public void stateChanged(ChangeEvent e) {
+                if (minResistanceSlider.getValue() > maxResistanceSlider.getValue()) {
+                    minResistanceSlider.setValue(maxResistanceSlider.getValue());
+                }
+            }
+        });
         //-----------------/Min resistance slider-----------------
 
         //-----------------Max resistance slider-----------------
@@ -53,11 +62,17 @@ public class SettingsWindow extends JFrame {
         maxResistanceSlider.setPaintLabels(true);
         maxResistanceSlider.setSnapToTicks(true);
         add(maxResistanceSlider).setBounds(10, 150, 300, 50);
+        maxResistanceSlider.addChangeListener(new ChangeListener()
+        {
+            public void stateChanged(ChangeEvent e) {
+                if (minResistanceSlider.getValue() > maxResistanceSlider.getValue()) {
+                    maxResistanceSlider.setValue(minResistanceSlider.getValue());
+                }
+            }
+        });
         //-----------------/Max resistance slider-----------------
 
-
         //-----------------Save button-----------------
-
         saveButton = new JButton("Save");
         saveButton.setBounds(150, 210, 100, 30);
         saveButton.addActionListener(e -> {
@@ -74,10 +89,10 @@ public class SettingsWindow extends JFrame {
                 maxDrunkardResistance = maxResistanceSlider.getValue();
             }
             else {
-                minRegResistance = minResistanceSlider.getValue();
-                maxRegResistance = maxResistanceSlider.getValue();
-                minConnResistance = minResistanceSlider.getValue();
-                maxConnResistance = maxResistanceSlider.getValue();
+                minRegResistance      = minResistanceSlider.getValue();
+                maxRegResistance      = maxResistanceSlider.getValue();
+                minConnResistance      = minResistanceSlider.getValue();
+                maxConnResistance      = maxResistanceSlider.getValue();
                 minDrunkardResistance = minResistanceSlider.getValue();
                 maxDrunkardResistance = maxResistanceSlider.getValue();
             }
@@ -109,12 +124,17 @@ public class SettingsWindow extends JFrame {
         add(new JLabel("Customer type:")).setBounds(10, 240, 150, 30);
         customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard"});
         add(customerTypeComboBox).setBounds(10, 270, 150, 30);
+        customerTypeComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                minResistanceSlider.setValue(50);
+                maxResistanceSlider.setValue(50);
+            }
+        });
         //-----------------/Customer type dropBox-----------------
     }
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new SettingsWindow().setVisible(true));
     }
 }
