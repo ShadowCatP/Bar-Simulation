@@ -43,13 +43,6 @@ public class SimulationWindow extends JFrame {
         maxConnResistance = maxConnResistance_ / 100.0;
         maxDrunkardResistance = maxDrunkardResistance_ / 100.0;
 
-        System.out.println(minRegResistance);
-        System.out.println(minConnResistance);
-        System.out.println(minDrunkardResistance);
-        System.out.println(maxRegResistance);
-        System.out.println(maxConnResistance);
-        System.out.println(maxDrunkardResistance);
-
         this.customerType = customerType;
     }
 

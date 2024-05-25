@@ -101,8 +101,7 @@ public class SettingsWindow extends JFrame implements ActionListener {
             int iterations = Integer.parseInt(iterationsField.getText());
             String customerType = (String) customerTypeComboBox.getSelectedItem();
 
-            new SimulationWindow(iterations, minRegResistance, maxRegResistance,
-                    minConnResistance, maxConnResistance, minDrunkardResistance, maxDrunkardResistance, customerType).setVisible(true);
+            new SimulationWindow(iterations, minRegResistance, minConnResistance, minDrunkardResistance, maxRegResistance, maxConnResistance, maxDrunkardResistance, customerType).setVisible(true);
             dispose();
         });
         proceedButton.setFocusable(false);
