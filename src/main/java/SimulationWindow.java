@@ -8,18 +8,21 @@ public class SimulationWindow extends JFrame {
     private JTextArea textArea;
     private JButton startButton;
     private JScrollPane scrollPane;
-    private static int numberOfIterations;
-    private static double minResistance;
-    private static double maxResistance;
+    private int numberOfIterations; //was static
+    private double minRegResistance, minConnResistance, minDrunkardResistance; //was static
+    private double maxRegResistance, maxConnResistance, maxDrunkardResistance; //was static
     private static String customerType;
 
-    public SimulationWindow(int numberOfIterations, int minResistance, int maxResistance, String customerType) {
+    public SimulationWindow(int numberOfIterations,
+    int minRegResistance_, int minConnResistance_, int minDrunkardResistance_,
+    int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_,
+                            String customerType) {
         setTitle("Simulation Window");
-        setSize(500, 400);
+        setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
-
+        setResizable(true);
         textArea = new JTextArea();
         textArea.setEditable(false);
         scrollPane = new JScrollPane(textArea);
@@ -31,8 +34,22 @@ public class SimulationWindow extends JFrame {
         add(startButton, BorderLayout.SOUTH);
 
         this.numberOfIterations = numberOfIterations;
-        this.minResistance = minResistance / 100.0;
-        this.maxResistance = maxResistance / 100.0;
+
+        minRegResistance = minRegResistance_ / 100.0;
+        minConnResistance = minConnResistance_ / 100.0;
+        minDrunkardResistance = minDrunkardResistance_ / 100.0;
+
+        maxRegResistance = maxRegResistance_ / 100.0;
+        maxConnResistance = maxConnResistance_ / 100.0;
+        maxDrunkardResistance = maxDrunkardResistance_ / 100.0;
+
+        System.out.println(minRegResistance);
+        System.out.println(minConnResistance);
+        System.out.println(minDrunkardResistance);
+        System.out.println(maxRegResistance);
+        System.out.println(maxConnResistance);
+        System.out.println(maxDrunkardResistance);
+
         this.customerType = customerType;
     }
 
@@ -44,11 +61,11 @@ public class SimulationWindow extends JFrame {
         List<Customer> customers = new ArrayList<>();
         double resistance;
         for (int i = 0; i < 6; i++) {
-            resistance = minResistance + (maxResistance - minResistance) * rand.nextDouble();
+            resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
             customers.add(new Customer("Regular_" + (i + 1), resistance, new Regular()));
-            resistance = minResistance + (maxResistance - minResistance) * rand.nextDouble();
+            resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
             customers.add(new Customer("Connoisseur_" + (i + 1), resistance, new Connoisseur()));
-            resistance = minResistance + (maxResistance - minResistance) * rand.nextDouble();
+            resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) * rand.nextDouble();
             customers.add(new Customer("Drunkard_" + (i + 1), resistance, new Drunkard()));
         }
 
