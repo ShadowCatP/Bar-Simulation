@@ -1,12 +1,20 @@
+import java.io.IOException;
 import java.util.List;
 
 public class Simulation {
     private List<Customer> customers;
     private List<Beer> beers;
+    private CSVWriter csvWriter;
 
     public Simulation(List<Customer> customers, List<Beer> beers) {
         this.customers = customers;
         this.beers = beers;
+
+        try {
+            csvWriter = new CSVWriter("simulation_results.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run (int iterations, String customerType) {
@@ -19,9 +27,21 @@ public class Simulation {
                     ((Drunkard) customer.getBehavior()).remove();
                     customer.setDrunkenness(0.0);
                 }
+
+                try {
+                    csvWriter.writeData(i, customer, customers.size());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             printState(i, customerType); // TODO remove after testing
+        }
+
+        try {
+            csvWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
