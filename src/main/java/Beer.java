@@ -5,7 +5,6 @@ public class Beer {
     static Vector<Beer> beers;
 
     static void createBeers() {
-        // TODO implement beer creation here
         beers = new Vector<Beer>();
         beers.add(new Beer("Corona Light", 8));
         beers.add(new Beer("Heineken", 12));

@@ -54,11 +54,11 @@ public class SimulationWindow extends JFrame {
         List<Customer> customers = new ArrayList<>();
         double resistance;
         for (int i = 0; i < 6; i++) {
-            resistance = minRegResistance + (maxRegResistance - minRegResistance) / rand.nextDouble();
+            resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
             customers.add(new Customer("Regular_" + (i + 1), resistance, new Regular()));
-            resistance = minConnResistance + (maxConnResistance - minConnResistance) / rand.nextDouble();
+            resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
             customers.add(new Customer("Connoisseur_" + (i + 1), resistance, new Connoisseur()));
-            resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) / rand.nextDouble();
+            resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) * rand.nextDouble();
             customers.add(new Customer("Drunkard_" + (i + 1), resistance, new Drunkard()));
         }
 
