@@ -16,8 +16,15 @@ public class Beer {
         this.quantity = quantity;
     }
 
-    static void createBeers(HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
+    static void createBeers(HashMap<String, Integer> beerQuantities) {
         beers = new Vector<Beer>();
+
+        HashMap<String, Integer> beerStrengths = new HashMap<>();
+        beerStrengths.put("Corona Light", 8);
+        beerStrengths.put("Heineken", 12);
+        beerStrengths.put("Guinness", 17);
+        beerStrengths.put("Blackout Stout", 22);
+
         for (Map.Entry<String, Integer> entry : beerQuantities.entrySet()) {
             String beerName = entry.getKey();
             int quantity = entry.getValue();

@@ -12,12 +12,11 @@ public class SimulationWindow extends JFrame {
     private double maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance;
     private String customerType;
     private HashMap<String, Integer> beerQuantities;
-    private HashMap<String, Integer> beerStrengths;
 
     public SimulationWindow(int numberOfIterations,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
-                            String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
+                            String customerType, HashMap<String, Integer> beerQuantities) {
         setTitle("Simulation Window");
         setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,11 +46,10 @@ public class SimulationWindow extends JFrame {
         this.customerType = customerType;
         this.numberOfIterations = numberOfIterations;
         this.beerQuantities = beerQuantities;
-        this.beerStrengths = beerStrengths;
     }
 
     private void startSimulation() {
-        Beer.createBeers(beerQuantities, beerStrengths);
+        Beer.createBeers(beerQuantities);
 
         Random rand = new Random();
         List<Customer> customers = new ArrayList<>();
