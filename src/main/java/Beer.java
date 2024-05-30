@@ -1,22 +1,29 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class Beer {
 
     static Vector<Beer> beers;
 
-    static void createBeers() {
-        beers = new Vector<Beer>();
-        beers.add(new Beer("Corona Light", 8));
-        beers.add(new Beer("Heineken", 12));
-        beers.add(new Beer("Blackout Stout", 17));
-        beers.add(new Beer("Guinness",22));
-    }
     private String name;
     private int strength;
+    private int quantity;
 
-    public Beer(String name, int strength) {
+    public Beer(String name, int strength, int quantity) {
         this.name = name;
         this.strength = strength;
+        this.quantity = quantity;
+    }
+
+    static void createBeers(HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
+        beers = new Vector<Beer>();
+        for (Map.Entry<String, Integer> entry : beerQuantities.entrySet()) {
+            String beerName = entry.getKey();
+            int quantity = entry.getValue();
+            int strength = beerStrengths.get(beerName);
+            beers.add(new Beer(beerName, strength, quantity));
+        }
     }
 
     public String getName() {
@@ -29,5 +36,9 @@ public class Beer {
 
     public static Vector<Beer> getBeers() {
         return beers;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

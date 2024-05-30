@@ -3,6 +3,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 // Settings window should have settings for the simulations such as the number of iterations,
 // a range slider for minimal and maximal resistance for each type of customer, a fitness proportionate selection slider for distribution of chances
@@ -18,31 +19,35 @@ public class SettingsWindow extends JFrame {
     private JComboBox<String> customerTypeComboBox;
     private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50;
     private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50;
+    private HashMap<String, JSlider> beerQuantitySliders;
+    private HashMap<String, Integer> beerQuantities;
+    private HashMap<String, JSlider> beerStrengthSliders;
+    private HashMap<String, Integer> beerStrengths;
 
     SettingsWindow() {
         setTitle("Settings");
-        setSize(1000, 800);
+        setSize(750, 800);
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         //-----------------Iteration field-----------------
-        add(new JLabel("Number of iterations:")).setBounds(10, 10, 150, 30);
+        add(new JLabel("Number of iterations:")).setBounds(10, 350, 150, 30);
         iterationsField = new JTextField();
         iterationsField.setText("10");
-        add(iterationsField).setBounds(160, 10, 150, 30);
+        add(iterationsField).setBounds(160, 350, 150, 30);
         //-----------------/Iteration field-----------------
 
         //-----------------Min resistance slider-----------------
-        add(new JLabel("Min resistance:")).setBounds(10, 40, 150, 30);
+        add(new JLabel("Min resistance:")).setBounds(10, 380, 150, 30);
         minResistanceSlider = new JSlider(0, 100);
         minResistanceSlider.setMajorTickSpacing(25);
         minResistanceSlider.setMinorTickSpacing(5);
         minResistanceSlider.setPaintTicks(true);
         minResistanceSlider.setPaintLabels(true);
         minResistanceSlider.setSnapToTicks(true);
-        add(minResistanceSlider).setBounds(10, 70, 300, 50);
+        add(minResistanceSlider).setBounds(10, 410, 300, 50);
         minResistanceSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent e) {
@@ -54,14 +59,14 @@ public class SettingsWindow extends JFrame {
         //-----------------/Min resistance slider-----------------
 
         //-----------------Max resistance slider-----------------
-        add(new JLabel("Max resistance:")).setBounds(10, 120, 150, 30);
+        add(new JLabel("Max resistance:")).setBounds(10, 450, 150, 30);
         maxResistanceSlider = new JSlider(0, 100);
         maxResistanceSlider.setMajorTickSpacing(25);
         maxResistanceSlider.setMinorTickSpacing(5);
         maxResistanceSlider.setPaintTicks(true);
         maxResistanceSlider.setPaintLabels(true);
         maxResistanceSlider.setSnapToTicks(true);
-        add(maxResistanceSlider).setBounds(10, 150, 300, 50);
+        add(maxResistanceSlider).setBounds(10, 480, 300, 50);
         maxResistanceSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent e) {
@@ -72,9 +77,43 @@ public class SettingsWindow extends JFrame {
         });
         //-----------------/Max resistance slider-----------------
 
+        //-----------------Beer quantities sliders-----------------
+        beerQuantitySliders = new HashMap<>();
+        String[] beerNames = {"Corona Light", "Heineken", "Blackout Stout", "Guinness"};
+
+        for (int i = 0; i < beerNames.length; i++) {
+            add(new JLabel(beerNames[i] + " quantity:")).setBounds(10, 10 + 75 * i, 150, 30);
+            JSlider beerChanceSlider = new JSlider(0, 100);
+            beerChanceSlider.setMajorTickSpacing(25);
+            beerChanceSlider.setMinorTickSpacing(5);
+            beerChanceSlider.setPaintTicks(true);
+            beerChanceSlider.setPaintLabels(true);
+            beerChanceSlider.setSnapToTicks(true);
+            add(beerChanceSlider).setBounds(10, 40 + 75 * i, 300, 50);
+            beerQuantitySliders.put(beerNames[i], beerChanceSlider);
+        }
+        //-----------------/Beer quantities sliders-----------------
+
+        //-----------------Beer strength sliders-----------------
+        beerStrengthSliders = new HashMap<>();
+
+        for (int i = 0; i < beerNames.length; i++) {
+            add(new JLabel(beerNames[i] + " strength:")).setBounds(400, 10 + 75 * i, 150, 30);
+            JSlider beerStrengthSlider = new JSlider(0, 100);
+            beerStrengthSlider.setMajorTickSpacing(25);
+            beerStrengthSlider.setMinorTickSpacing(5);
+            beerStrengthSlider.setPaintTicks(true);
+            beerStrengthSlider.setPaintLabels(true);
+            beerStrengthSlider.setSnapToTicks(true);
+            add(beerStrengthSlider).setBounds(400, 40 + 75 * i, 300, 50);
+            beerStrengthSliders.put(beerNames[i], beerStrengthSlider);
+        }
+        //-----------------/Beer strength sliders-----------------
+
         //-----------------Save button-----------------
         saveButton = new JButton("Save");
-        saveButton.setBounds(150, 210, 100, 30);
+        saveButton.setBounds(375, 630, 350, 30);
+        saveButton.setFocusable(false);
         saveButton.addActionListener(e -> {
             if (customerTypeComboBox.getSelectedItem() == "Regular") {
                 minRegResistance = minResistanceSlider.getValue();
@@ -91,10 +130,22 @@ public class SettingsWindow extends JFrame {
             else {
                 minRegResistance      = minResistanceSlider.getValue();
                 maxRegResistance      = maxResistanceSlider.getValue();
-                minConnResistance      = minResistanceSlider.getValue();
-                maxConnResistance      = maxResistanceSlider.getValue();
+                minConnResistance     = minResistanceSlider.getValue();
+                maxConnResistance     = maxResistanceSlider.getValue();
                 minDrunkardResistance = minResistanceSlider.getValue();
                 maxDrunkardResistance = maxResistanceSlider.getValue();
+            }
+
+            beerQuantities = new HashMap<>();
+
+            for (String beerName : beerNames) {
+                beerQuantities.put(beerName, beerQuantitySliders.get(beerName).getValue());
+            }
+
+            beerStrengths = new HashMap<>();
+
+            for (String beerName : beerNames) {
+                beerStrengths.put(beerName, beerStrengthSliders.get(beerName).getValue());
             }
         });
         add(saveButton);
@@ -110,20 +161,22 @@ public class SettingsWindow extends JFrame {
                     Integer.parseInt(iterationsField.getText()),
                     minRegResistance, minConnResistance, minDrunkardResistance,
                     maxRegResistance, maxConnResistance, maxDrunkardResistance,
-                    (String) customerTypeComboBox.getSelectedItem()
+                    (String) customerTypeComboBox.getSelectedItem(),
+                    beerQuantities,
+                    beerStrengths
             ).setVisible(true);
             dispose();
         });
         proceedButton.setFocusable(false);
-        add(proceedButton).setBounds(10, 210, 100, 30);
+        add(proceedButton).setBounds(10, 630, 350, 30);
 
         //-----------------/Proceed button-----------------
 
 
         //-----------------Customer type dropBox-----------------
-        add(new JLabel("Customer type:")).setBounds(10, 240, 150, 30);
+        add(new JLabel("Customer type:")).setBounds(10, 550, 150, 30);
         customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard"});
-        add(customerTypeComboBox).setBounds(10, 270, 150, 30);
+        add(customerTypeComboBox).setBounds(10, 580, 150, 30);
         customerTypeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 minResistanceSlider.setValue(50);

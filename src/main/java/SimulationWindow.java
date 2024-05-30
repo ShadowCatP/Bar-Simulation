@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class SimulationWindow extends JFrame {
     private JTextArea textArea;
@@ -11,12 +10,14 @@ public class SimulationWindow extends JFrame {
     private int numberOfIterations;
     private double minRegResistance, minConnResistance, minDrunkardResistance;
     private double maxRegResistance, maxConnResistance, maxDrunkardResistance;
-    private static String customerType;
+    private String customerType;
+    private HashMap<String, Integer> beerQuantities;
+    private HashMap<String, Integer> beerStrengths;
 
     public SimulationWindow(int numberOfIterations,
-    int minRegResistance_, int minConnResistance_, int minDrunkardResistance_,
-    int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_,
-                            String customerType) {
+                            int minRegResistance_, int minConnResistance_, int minDrunkardResistance_,
+                            int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_,
+                            String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
         setTitle("Simulation Window");
         setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,8 +34,6 @@ public class SimulationWindow extends JFrame {
         startButton.setFocusable(false);
         add(startButton, BorderLayout.SOUTH);
 
-        this.numberOfIterations = numberOfIterations;
-
         minRegResistance = minRegResistance_ / 100.0;
         minConnResistance = minConnResistance_ / 100.0;
         minDrunkardResistance = minDrunkardResistance_ / 100.0;
@@ -44,11 +43,13 @@ public class SimulationWindow extends JFrame {
         maxDrunkardResistance = maxDrunkardResistance_ / 100.0;
 
         this.customerType = customerType;
+        this.numberOfIterations = numberOfIterations;
+        this.beerQuantities = beerQuantities;
+        this.beerStrengths = beerStrengths;
     }
 
     private void startSimulation() {
-        // TODO Initialize the simulation
-        Beer.createBeers();
+        Beer.createBeers(beerQuantities, beerStrengths);
 
         Random rand = new Random();
         List<Customer> customers = new ArrayList<>();
