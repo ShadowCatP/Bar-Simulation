@@ -10,7 +10,7 @@ public class Drunkard implements Behavior {
     public Beer chooseBeer(List<Beer> beers) {
         if (removed) {
             counter++;
-            if (counter >= 5 && !hasReturned) {
+            if (counter >= 4 && !hasReturned) {
                 removed = false;
                 hasReturned = true;
                 counter = 0;
@@ -30,5 +30,9 @@ public class Drunkard implements Behavior {
 
     public boolean isRemoved() {
         return removed;
+    }
+
+    public boolean hasReturned() {
+        return hasReturned;
     }
 }

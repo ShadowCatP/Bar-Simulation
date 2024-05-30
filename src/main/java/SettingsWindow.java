@@ -17,8 +17,8 @@ public class SettingsWindow extends JFrame {
     private JButton saveButton;
     private JButton proceedButton;
     private JComboBox<String> customerTypeComboBox;
-    private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50;
-    private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50;
+    private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50, minOccasionalDrinkerResistance = 50;
+    private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50, maxOccasionalDrinkerResistance = 50;
     private HashMap<String, JSlider> beerQuantitySliders;
     private HashMap<String, Integer> beerQuantities;
     private HashMap<String, JSlider> beerStrengthSliders;
@@ -127,13 +127,19 @@ public class SettingsWindow extends JFrame {
                 minDrunkardResistance = minResistanceSlider.getValue();
                 maxDrunkardResistance = maxResistanceSlider.getValue();
             }
+            else if (customerTypeComboBox.getSelectedItem() == "Occasional Drinker") {
+                minOccasionalDrinkerResistance = minResistanceSlider.getValue();
+                maxOccasionalDrinkerResistance = maxResistanceSlider.getValue();
+            }
             else {
-                minRegResistance      = minResistanceSlider.getValue();
-                maxRegResistance      = maxResistanceSlider.getValue();
-                minConnResistance     = minResistanceSlider.getValue();
-                maxConnResistance     = maxResistanceSlider.getValue();
-                minDrunkardResistance = minResistanceSlider.getValue();
-                maxDrunkardResistance = maxResistanceSlider.getValue();
+                minRegResistance               = minResistanceSlider.getValue();
+                maxRegResistance               = maxResistanceSlider.getValue();
+                minConnResistance              = minResistanceSlider.getValue();
+                maxConnResistance              = maxResistanceSlider.getValue();
+                minDrunkardResistance          = minResistanceSlider.getValue();
+                maxDrunkardResistance          = maxResistanceSlider.getValue();
+                minOccasionalDrinkerResistance = minResistanceSlider.getValue();
+                maxOccasionalDrinkerResistance = maxResistanceSlider.getValue();
             }
 
             beerQuantities = new HashMap<>();
@@ -147,6 +153,8 @@ public class SettingsWindow extends JFrame {
             for (String beerName : beerNames) {
                 beerStrengths.put(beerName, beerStrengthSliders.get(beerName).getValue());
             }
+
+            proceedButton.setEnabled(true);
         });
         add(saveButton);
 
@@ -156,26 +164,27 @@ public class SettingsWindow extends JFrame {
         //-----------------Proceed button-----------------
 
         proceedButton = new JButton("Proceed");
+        proceedButton.setFocusable(false);
+        proceedButton.setEnabled(false);
+        add(proceedButton).setBounds(10, 630, 350, 30);
         proceedButton.addActionListener(e -> {
             new SimulationWindow(
                     Integer.parseInt(iterationsField.getText()),
-                    minRegResistance, minConnResistance, minDrunkardResistance,
-                    maxRegResistance, maxConnResistance, maxDrunkardResistance,
+                    minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
+                    maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
                     (String) customerTypeComboBox.getSelectedItem(),
                     beerQuantities,
                     beerStrengths
             ).setVisible(true);
             dispose();
         });
-        proceedButton.setFocusable(false);
-        add(proceedButton).setBounds(10, 630, 350, 30);
 
         //-----------------/Proceed button-----------------
 
 
         //-----------------Customer type dropBox-----------------
         add(new JLabel("Customer type:")).setBounds(10, 550, 150, 30);
-        customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard"});
+        customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard", "Occasional Drinker"});
         add(customerTypeComboBox).setBounds(10, 580, 150, 30);
         customerTypeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

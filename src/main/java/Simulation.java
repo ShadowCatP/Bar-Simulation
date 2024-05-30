@@ -40,7 +40,7 @@ public class Simulation {
                 System.out.println("Beer: " + beer.getName() + ", Quantity: " + beer.getQuantity());
             }
 
-            printState(i, customerType); // TODO remove after testing
+            printState(i); // TODO remove after testing
         }
 
         try {
@@ -50,10 +50,16 @@ public class Simulation {
         }
     }
 
-    public void printState(int iteration, String customerType) {
+    public void printState(int iteration) {
         System.out.println("Iteration: " + iteration);
         for (Customer customer : customers) {
-            if (customer.getDrunkenness() <= 100.0 && (customerType.equals("All") || customer.getBehavior().getClass().getSimpleName().equals(customerType) || customer.getName().equals(customerType))) {
+            if (customer.getBehavior() instanceof Drunkard) {
+                Drunkard drunkard = (Drunkard) customer.getBehavior();
+                if (drunkard.isRemoved() && drunkard.hasReturned()) {
+                    continue;
+                }
+            }
+            if (customer.getDrunkenness() <= 100.0) {
                 System.out.println("Customer: " + customer.getName()
                         + " Drunkenness: " + customer.getDrunkenness()
                         + " Resistance: " + customer.getResistance()

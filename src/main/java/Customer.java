@@ -21,9 +21,13 @@ public class Customer {
     }
 
     public void drink(Beer beer) {
-        if (beer == null || drunkenness >= 100.0) {
-            isRemoved = true;
+        if (beer == null) {
+            currentBeer = null;
             return;
+        }
+
+        if (drunkenness >= 100.0) {
+            isRemoved = true;
         }
         currentBeer = beer;
         drunkenness += beer.getStrength() * resistance;
