@@ -26,7 +26,7 @@ public class SettingsWindow extends JFrame {
 
     SettingsWindow() {
         setTitle("Settings");
-        setSize(750, 800);
+        setSize(380, 800);
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,25 +94,9 @@ public class SettingsWindow extends JFrame {
         }
         //-----------------/Beer quantities sliders-----------------
 
-        //-----------------Beer strength sliders-----------------
-        beerStrengthSliders = new HashMap<>();
-
-        for (int i = 0; i < beerNames.length; i++) {
-            add(new JLabel(beerNames[i] + " strength:")).setBounds(400, 10 + 75 * i, 150, 30);
-            JSlider beerStrengthSlider = new JSlider(0, 100);
-            beerStrengthSlider.setMajorTickSpacing(25);
-            beerStrengthSlider.setMinorTickSpacing(5);
-            beerStrengthSlider.setPaintTicks(true);
-            beerStrengthSlider.setPaintLabels(true);
-            beerStrengthSlider.setSnapToTicks(true);
-            add(beerStrengthSlider).setBounds(400, 40 + 75 * i, 300, 50);
-            beerStrengthSliders.put(beerNames[i], beerStrengthSlider);
-        }
-        //-----------------/Beer strength sliders-----------------
-
         //-----------------Save button-----------------
         saveButton = new JButton("Save");
-        saveButton.setBounds(375, 630, 350, 30);
+        saveButton.setBounds(10, 630, 350, 30);
         saveButton.setFocusable(false);
         saveButton.addActionListener(e -> {
             if (customerTypeComboBox.getSelectedItem() == "Regular") {
@@ -148,12 +132,6 @@ public class SettingsWindow extends JFrame {
                 beerQuantities.put(beerName, beerQuantitySliders.get(beerName).getValue());
             }
 
-            beerStrengths = new HashMap<>();
-
-            for (String beerName : beerNames) {
-                beerStrengths.put(beerName, beerStrengthSliders.get(beerName).getValue());
-            }
-
             proceedButton.setEnabled(true);
         });
         add(saveButton);
@@ -166,15 +144,14 @@ public class SettingsWindow extends JFrame {
         proceedButton = new JButton("Proceed");
         proceedButton.setFocusable(false);
         proceedButton.setEnabled(false);
-        add(proceedButton).setBounds(10, 630, 350, 30);
+        add(proceedButton).setBounds(10, 665, 350, 30);
         proceedButton.addActionListener(e -> {
             new SimulationWindow(
                     Integer.parseInt(iterationsField.getText()),
                     minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
                     maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
                     (String) customerTypeComboBox.getSelectedItem(),
-                    beerQuantities,
-                    beerStrengths
+                    beerQuantities
             ).setVisible(true);
             dispose();
         });
