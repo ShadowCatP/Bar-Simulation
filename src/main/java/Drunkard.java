@@ -32,6 +32,16 @@ public class Drunkard extends Customer {
         counter = 0;
     }
 
+
+    @Override
+    public void drink(Beer beer) {
+        super.drink(beer);
+        if (getDrunkenness() > 100.0) {
+           remove();
+            setDrunkenness(0.0);
+        }
+    }
+
     public boolean isRemoved() {
         return removed;
     }

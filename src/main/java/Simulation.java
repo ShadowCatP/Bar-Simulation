@@ -23,10 +23,6 @@ public class Simulation {
             for (Customer customer : customers) {
                 Beer chosenBeer = customer.chooseBeer(beers);
                 customer.drink(chosenBeer);
-                if (customer.getDrunkenness() > 100.0 && customer instanceof Drunkard) {
-                    ((Drunkard) customer).remove();
-                    customer.setDrunkenness(0.0);
-                }
 
                 try {
                     csvWriter.writeData(i, customer, customers.size());
