@@ -197,6 +197,7 @@ public class SettingsWindow extends JFrame {
 
 
     public static void main(String[] args) {
+        // TODO implement the feature to run simulation fast multiple times if config file is provided
         SwingUtilities.invokeLater(() -> new SettingsWindow().setVisible(true));
     }
 }

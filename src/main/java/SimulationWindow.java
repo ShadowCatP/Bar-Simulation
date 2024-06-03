@@ -58,13 +58,13 @@ public class SimulationWindow extends JFrame {
         double resistance;
         for (int i = 0; i < 6; i++) {
             resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
-            customers.add(new Customer("Regular_" + (i + 1), resistance, new Regular()));
+            customers.add(new Regular("Regular_" + (i + 1), resistance));
             resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
-            customers.add(new Customer("Connoisseur_" + (i + 1), resistance, new Connoisseur()));
+            customers.add(new Connoisseur("Connoisseur_" + (i + 1), resistance));
             resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) * rand.nextDouble();
-            customers.add(new Customer("Drunkard_" + (i + 1), resistance, new Drunkard()));
+            customers.add(new Drunkard("Drunkard_" + (i + 1), resistance));
             resistance = minOccasionalDrinkerResistance + (maxOccasionalDrinkerResistance - minOccasionalDrinkerResistance) * rand.nextDouble();
-            customers.add(new Customer("OccasionalDrinker_" + (i + 1), resistance, new OccasionalDrinker()));
+            customers.add(new OccasionalDrinker("OccasionalDrinker_" + (i + 1), resistance));
         }
 
         Simulation simulation = new Simulation(customers, Beer.getBeers());

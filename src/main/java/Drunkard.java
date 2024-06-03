@@ -1,10 +1,14 @@
 import java.util.List;
 import java.util.Random;
 
-public class Drunkard implements Behavior {
+public class Drunkard extends Customer {
     private int counter = 0;
     private boolean removed = false;
     private boolean hasReturned = false;
+
+    public Drunkard(String name, double resistance) {
+        super(name, resistance);
+    }
 
     @Override
     public Beer chooseBeer(List<Beer> beers) {

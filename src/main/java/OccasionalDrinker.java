@@ -1,8 +1,12 @@
 import java.util.List;
 import java.util.Random;
 
-public class OccasionalDrinker implements Behavior {
+public class OccasionalDrinker extends Customer {
     private int counter = 0;
+
+    public OccasionalDrinker(String name, double resistance) {
+        super(name, resistance);
+    }
 
 
     @Override

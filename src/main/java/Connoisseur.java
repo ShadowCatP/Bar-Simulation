@@ -1,9 +1,14 @@
 import java.util.List;
 import java.util.Random;
 
-public class Connoisseur implements Behavior {
+public class Connoisseur extends Customer {
     private Beer lastBeer = null;
     private int sameBeerCount = 1;
+
+    public Connoisseur(String name, double resistance) {
+        super(name, resistance);
+    }
+
     @Override
     public Beer chooseBeer(List<Beer> beers) {
         if (sameBeerCount < 3 && lastBeer != null) {

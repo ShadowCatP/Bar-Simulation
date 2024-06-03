@@ -20,7 +20,7 @@ public class CSVWriter {
         fileWriter.append(",");
         fileWriter.append(customer.getName());
         fileWriter.append(",");
-        fileWriter.append(customer.getBehavior().getClass().getSimpleName());
+        fileWriter.append(customer.getClass().getSimpleName());
         fileWriter.append(",");
         fileWriter.append(customer.getCurrentBeer() != null ? customer.getCurrentBeer().getName() : "None");
         fileWriter.append(",");
@@ -30,8 +30,8 @@ public class CSVWriter {
         fileWriter.append(",");
         fileWriter.append(String.valueOf(remainingCustomers));
         fileWriter.append(",");
-        if (customer.getBehavior() instanceof Drunkard) {
-            Drunkard drunkard = (Drunkard) customer.getBehavior();
+        if (customer instanceof Drunkard) {
+            Drunkard drunkard = (Drunkard) customer;
             if (drunkard.isRemoved() && !drunkard.hasReturned()) {
                 fileWriter.append("Will return");
             } else if (drunkard.isRemoved() && drunkard.hasReturned()) {

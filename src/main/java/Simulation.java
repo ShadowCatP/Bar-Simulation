@@ -21,10 +21,10 @@ public class Simulation {
         for (int i = 0; i < iterations; i++) {
 
             for (Customer customer : customers) {
-                Beer chosenBeer = customer.getBehavior().chooseBeer(beers);
+                Beer chosenBeer = customer.chooseBeer(beers);
                 customer.drink(chosenBeer);
-                if (customer.getDrunkenness() > 100.0 && customer.getBehavior() instanceof Drunkard) {
-                    ((Drunkard) customer.getBehavior()).remove();
+                if (customer.getDrunkenness() > 100.0 && customer instanceof Drunkard) {
+                    ((Drunkard) customer).remove();
                     customer.setDrunkenness(0.0);
                 }
 
@@ -53,8 +53,8 @@ public class Simulation {
     public void printState(int iteration) {
         System.out.println("Iteration: " + iteration);
         for (Customer customer : customers) {
-            if (customer.getBehavior() instanceof Drunkard) {
-                Drunkard drunkard = (Drunkard) customer.getBehavior();
+            if (customer instanceof Drunkard) {
+                Drunkard drunkard = (Drunkard) customer;
                 if (drunkard.isRemoved() && drunkard.hasReturned()) {
                     continue;
                 }
