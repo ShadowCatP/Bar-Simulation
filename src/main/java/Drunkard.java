@@ -1,13 +1,15 @@
 import java.util.List;
 import java.util.Random;
+import java.awt.Color;
 
 public class Drunkard extends Customer {
     private int counter = 0;
     private boolean removed = false;
     private boolean hasReturned = false;
+    private Color color = Color.pink;
 
-    public Drunkard(String name, double resistance) {
-        super(name, resistance);
+    public Drunkard(String name, double resistance, int x, int y) {
+        super(name, resistance, x, y, Color.red);
     }
 
     @Override

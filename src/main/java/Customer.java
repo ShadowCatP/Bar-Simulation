@@ -2,6 +2,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
+import java.awt.Color;
 
 public abstract class Customer {
     private String name;
@@ -10,15 +11,19 @@ public abstract class Customer {
     private DecimalFormat numberFormat;
     private Beer currentBeer;
     private boolean isRemoved;
-
+    private int x, y;
+    private Color color;
     public abstract Beer chooseBeer(List<Beer> beers);
 
-    public Customer (String name, double resistance) {
+    public Customer (String name, double resistance, int x_, int y_, Color color_) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
         symbols.setDecimalSeparator('.');
         numberFormat = new DecimalFormat("#.00", symbols);
         this.name = name;
         this.resistance = Double.parseDouble(numberFormat.format(resistance));
+
+        x = x_; y = y_;
+        color = color_;
     }
 
     public void drink(Beer beer) {
@@ -57,5 +62,15 @@ public abstract class Customer {
 
     public boolean isRemoved() {
         return isRemoved;
+    }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public Color getColor() {
+        return color;
     }
 }

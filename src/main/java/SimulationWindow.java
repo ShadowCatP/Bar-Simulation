@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -20,19 +19,17 @@ public class SimulationWindow extends JFrame {
                             String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
         setTitle("Simulation Window");
         setSize(1000, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
+        setLayout(null);
         textArea = new JTextArea();
         textArea.setEditable(false);
-        scrollPane = new JScrollPane(textArea);
-        add(scrollPane, BorderLayout.CENTER);
 
         startButton = new JButton("Start Simulation");
         startButton.addActionListener(e -> startSimulation());
         startButton.setFocusable(false);
-        add(startButton, BorderLayout.SOUTH);
+        startButton.setBounds(400, 700, 200, 50);
+        add(startButton);
 
         minRegResistance = minRegResistance_ / 100.0;
         minConnResistance = minConnResistance_ / 100.0;
@@ -55,17 +52,29 @@ public class SimulationWindow extends JFrame {
 
         Random rand = new Random();
         List<Customer> customers = new ArrayList<>();
+
+        int startXAndY = 50, x = startXAndY, y = startXAndY, distanceX = 280, distanceY = 100;
         double resistance;
         for (int i = 0; i < 6; i++) {
             resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
-            customers.add(new Regular("Regular_" + (i + 1), resistance));
+            customers.add(new Regular("Regular_" + (i + 1), resistance, x, y));
+            x += distanceX;
             resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
-            customers.add(new Connoisseur("Connoisseur_" + (i + 1), resistance));
+            customers.add(new Connoisseur("Connoisseur_" + (i + 1), resistance, x, y));
+            x += distanceX;
             resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) * rand.nextDouble();
-            customers.add(new Drunkard("Drunkard_" + (i + 1), resistance));
+            customers.add(new Drunkard("Drunkard_" + (i + 1), resistance, x, y));
+            x += distanceX;
             resistance = minOccasionalDrinkerResistance + (maxOccasionalDrinkerResistance - minOccasionalDrinkerResistance) * rand.nextDouble();
-            customers.add(new OccasionalDrinker("OccasionalDrinker_" + (i + 1), resistance));
+            customers.add(new OccasionalDrinker("OccasionalDrinker_" + (i + 1), resistance, x, y));
+            x = startXAndY; y += distanceY;
         }
+        y = startXAndY;
+
+        DrawAll drawAll = new DrawAll(customers);
+        drawAll.setBounds(0, 0, 1000, 800);
+        repaint();
+        add(drawAll);
 
         Simulation simulation = new Simulation(customers, Beer.getBeers());
         simulation.run(numberOfIterations, customerType);
