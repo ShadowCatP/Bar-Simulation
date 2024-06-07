@@ -4,15 +4,15 @@ import java.util.List;
 
 public class SimulationWindow extends JFrame {
     private JTextArea textArea;
-    private JButton startButton;
-    private JScrollPane scrollPane;
+    private JButton startButton, nextIterButton;
     private int numberOfIterations;
     private double minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance;
     private double maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance;
     private String customerType;
     private HashMap<String, Integer> beerQuantities;
     private HashMap<String, Integer> beerStrengths;
-
+    List<Customer> customers;
+    Simulation simulation;
     public SimulationWindow(int numberOfIterations,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
@@ -25,11 +25,33 @@ public class SimulationWindow extends JFrame {
         textArea = new JTextArea();
         textArea.setEditable(false);
 
+        customers = new ArrayList<>();
+
+        //------------------Beer-----------------------
+        Beer.createBeers(beerQuantities, beerStrengths);
+        //-----------------startButton-----------------
         startButton = new JButton("Start Simulation");
-        startButton.addActionListener(e -> startSimulation());
+        startButton.addActionListener(e -> {
+            startSimulation();
+            startButton.setEnabled(false);
+        });
         startButton.setFocusable(false);
-        startButton.setBounds(400, 700, 200, 50);
+        startButton.setBounds(600, 700, 200, 50);
         add(startButton);
+        //-----------------/startButton-----------------
+        simulation = new Simulation(customers, Beer.getBeers());
+
+        //-----------------nextIterButton-----------------
+        nextIterButton = new JButton("Go to next iteration");
+        nextIterButton.setFocusable(false);
+        nextIterButton.setBounds(200, 700, 200, 50);
+        nextIterButton.setEnabled(false);
+        startButton.addActionListener(e -> {
+            startSimulation();
+            nextIterButton.setEnabled(true);
+        });
+        add(nextIterButton);
+        //-----------------/nextIterButton-----------------
 
         minRegResistance = minRegResistance_ / 100.0;
         minConnResistance = minConnResistance_ / 100.0;
@@ -48,10 +70,7 @@ public class SimulationWindow extends JFrame {
     }
 
     private void startSimulation() {
-        Beer.createBeers(beerQuantities, beerStrengths);
-
         Random rand = new Random();
-        List<Customer> customers = new ArrayList<>();
 
         int startXAndY = 50, x = startXAndY, y = startXAndY, distanceX = 280, distanceY = 100;
         double resistance;
@@ -76,7 +95,6 @@ public class SimulationWindow extends JFrame {
         repaint();
         add(drawAll);
 
-        Simulation simulation = new Simulation(customers, Beer.getBeers());
-        simulation.run(numberOfIterations, customerType);
+        simulation.run(0, "");
     }
 }

@@ -157,6 +157,7 @@ public class SettingsWindow extends JFrame {
             proceedButton.setEnabled(true);
         });
         add(saveButton);
+
         //-----------------/Save button-----------------
 
 
@@ -193,6 +194,7 @@ public class SettingsWindow extends JFrame {
         });
         //-----------------/Customer type dropBox-----------------
     }
+
 
     public static void main(String[] args) {
         // TODO implement the feature to run simulation fast multiple times if config file is provided

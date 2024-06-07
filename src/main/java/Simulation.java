@@ -6,6 +6,8 @@ public class Simulation {
     private List<Beer> beers;
     private CSVWriter csvWriter;
 
+    private int currIter = 0;
+
     public Simulation(List<Customer> customers, List<Beer> beers) {
         this.customers = customers;
         this.beers = beers;
@@ -17,33 +19,29 @@ public class Simulation {
         }
     }
 
-    public void run (int iterations, String customerType) {
-        for (int i = 0; i < iterations; i++) {
-
-            for (Customer customer : customers) {
-                Beer chosenBeer = customer.chooseBeer(beers);
-                customer.drink(chosenBeer);
-
-                try {
-                    csvWriter.writeData(i, customer, customers.size());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    public void run(int iterations, String customerType) {
+        for (Customer customer : customers) {
+            Beer chosenBeer = customer.chooseBeer(beers);
+            customer.drink(chosenBeer);
+            try {
+                csvWriter.writeData(currIter, customer, customers.size());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            // Print the quantity of each type of beer
-            for (Beer beer : beers) {
-                System.out.println("Beer: " + beer.getName() + ", Quantity: " + beer.getQuantity());
-            }
-
-            printState(i); // TODO remove after testing
         }
-
-        try {
-            csvWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Print the quantity of each type of beer
+        for (Beer beer : beers) {
+            System.out.println("Beer: " + beer.getName() + ", Quantity: " + beer.getQuantity());
         }
+        printState(currIter); // TODO remove after testing
+
+        //try {
+        //    csvWriter.close();
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+//
+        //++currIter;
     }
 
     public void printState(int iteration) {

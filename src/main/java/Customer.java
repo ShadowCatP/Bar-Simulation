@@ -12,7 +12,7 @@ public abstract class Customer {
     private Beer currentBeer;
     private boolean isRemoved;
     private int x, y;
-    private Color color;
+    public Color color;
     public abstract Beer chooseBeer(List<Beer> beers);
 
     public Customer (String name, double resistance, int x_, int y_, Color color_) {
@@ -36,7 +36,7 @@ public abstract class Customer {
             isRemoved = true;
         }
         currentBeer = beer;
-        drunkenness += beer.getStrength() * resistance;
+        drunkenness += beer.getStrength() / resistance;
         drunkenness = Double.parseDouble(numberFormat.format(drunkenness));
     }
 
@@ -69,8 +69,5 @@ public abstract class Customer {
     }
     public int getY() {
         return y;
-    }
-    public Color getColor() {
-        return color;
     }
 }
