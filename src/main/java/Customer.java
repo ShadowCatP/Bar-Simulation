@@ -36,7 +36,7 @@ public abstract class Customer {
             isRemoved = true;
         }
         currentBeer = beer;
-        drunkenness += beer.getStrength() / resistance;
+        drunkenness += beer.getStrength() * resistance;
         drunkenness = Double.parseDouble(numberFormat.format(drunkenness));
     }
 

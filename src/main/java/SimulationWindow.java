@@ -27,28 +27,34 @@ public class SimulationWindow extends JFrame {
 
         customers = new ArrayList<>();
 
-        //------------------Beer-----------------------
+        //-----------------Beer-----------------
+        this.customerType = customerType;
+        this.numberOfIterations = numberOfIterations;
+        this.beerQuantities = beerQuantities;
+        this.beerStrengths = beerStrengths;
         Beer.createBeers(beerQuantities, beerStrengths);
+        //-----------------/Beer-----------------
+
         //-----------------startButton-----------------
         startButton = new JButton("Start Simulation");
-        startButton.addActionListener(e -> {
-            startSimulation();
-            startButton.setEnabled(false);
-        });
         startButton.setFocusable(false);
         startButton.setBounds(600, 700, 200, 50);
+
+        startButton.addActionListener(e -> {
+            simulation = new Simulation(customers, Beer.getBeers());
+            startSimulation();
+        });
+
         add(startButton);
         //-----------------/startButton-----------------
-        simulation = new Simulation(customers, Beer.getBeers());
 
         //-----------------nextIterButton-----------------
         nextIterButton = new JButton("Go to next iteration");
         nextIterButton.setFocusable(false);
         nextIterButton.setBounds(200, 700, 200, 50);
         nextIterButton.setEnabled(false);
-        startButton.addActionListener(e -> {
-            startSimulation();
-            nextIterButton.setEnabled(true);
+        nextIterButton.addActionListener(e -> {
+            simulation.run();
         });
         add(nextIterButton);
         //-----------------/nextIterButton-----------------
@@ -62,11 +68,6 @@ public class SimulationWindow extends JFrame {
         maxConnResistance = maxConnResistance_ / 100.0;
         maxDrunkardResistance = maxDrunkardResistance_ / 100.0;
         maxOccasionalDrinkerResistance = maxOccasionalDrinkerResistance_ / 100.0;
-
-        this.customerType = customerType;
-        this.numberOfIterations = numberOfIterations;
-        this.beerQuantities = beerQuantities;
-        this.beerStrengths = beerStrengths;
     }
 
     private void startSimulation() {
@@ -94,7 +95,9 @@ public class SimulationWindow extends JFrame {
         drawAll.setBounds(0, 0, 1000, 800);
         repaint();
         add(drawAll);
+        startButton.setEnabled(false);
+        nextIterButton.setEnabled(true);
 
-        simulation.run(0, "");
+        simulation.run();
     }
 }

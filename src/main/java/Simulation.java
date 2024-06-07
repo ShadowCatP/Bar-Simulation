@@ -19,7 +19,7 @@ public class Simulation {
         }
     }
 
-    public void run(int iterations, String customerType) {
+    public void run() {
         for (Customer customer : customers) {
             Beer chosenBeer = customer.chooseBeer(beers);
             customer.drink(chosenBeer);
@@ -34,14 +34,7 @@ public class Simulation {
             System.out.println("Beer: " + beer.getName() + ", Quantity: " + beer.getQuantity());
         }
         printState(currIter); // TODO remove after testing
-
-        //try {
-        //    csvWriter.close();
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-//
-        //++currIter;
+        ++currIter;
     }
 
     public void printState(int iteration) {
