@@ -19,14 +19,13 @@ public class SettingsWindow extends JFrame {
     private JComboBox<String> customerTypeComboBox;
     private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50, minOccasionalDrinkerResistance = 50;
     private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50, maxOccasionalDrinkerResistance = 50;
-    private HashMap<String, JSlider> beerQuantitySliders;
-    private HashMap<String, Integer> beerQuantities;
+    private String[] beerNames = {"Corona Light", "Heineken", "Blackout Stout", "Guinness"};
     private HashMap<String, JSlider> beerStrengthSliders;
     private HashMap<String, Integer> beerStrengths;
 
     SettingsWindow() {
         setTitle("Settings");
-        setSize(750, 800);
+        setSize(380, 800);
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,42 +76,25 @@ public class SettingsWindow extends JFrame {
         });
         //-----------------/Max resistance slider-----------------
 
-        //-----------------Beer quantities sliders-----------------
-        beerQuantitySliders = new HashMap<>();
-        String[] beerNames = {"Corona Light", "Heineken", "Blackout Stout", "Guinness"};
-
-        for (int i = 0; i < beerNames.length; i++) {
-            add(new JLabel(beerNames[i] + " quantity:")).setBounds(10, 10 + 75 * i, 150, 30);
-            JSlider beerChanceSlider = new JSlider(0, 100);
-            beerChanceSlider.setMajorTickSpacing(25);
-            beerChanceSlider.setMinorTickSpacing(5);
-            beerChanceSlider.setPaintTicks(true);
-            beerChanceSlider.setPaintLabels(true);
-            beerChanceSlider.setSnapToTicks(true);
-            add(beerChanceSlider).setBounds(10, 40 + 75 * i, 300, 50);
-            beerQuantitySliders.put(beerNames[i], beerChanceSlider);
-        }
-        //-----------------/Beer quantities sliders-----------------
-
         //-----------------Beer strength sliders-----------------
         beerStrengthSliders = new HashMap<>();
 
         for (int i = 0; i < beerNames.length; i++) {
-            add(new JLabel(beerNames[i] + " strength:")).setBounds(400, 10 + 75 * i, 150, 30);
+            add(new JLabel(beerNames[i] + " strength:")).setBounds(10, 10 + 75 * i, 150, 30);
             JSlider beerStrengthSlider = new JSlider(0, 100);
             beerStrengthSlider.setMajorTickSpacing(25);
             beerStrengthSlider.setMinorTickSpacing(5);
             beerStrengthSlider.setPaintTicks(true);
             beerStrengthSlider.setPaintLabels(true);
             beerStrengthSlider.setSnapToTicks(true);
-            add(beerStrengthSlider).setBounds(400, 40 + 75 * i, 300, 50);
+            add(beerStrengthSlider).setBounds(10, 40 + 75 * i, 300, 50);
             beerStrengthSliders.put(beerNames[i], beerStrengthSlider);
         }
         //-----------------/Beer strength sliders-----------------
 
         //-----------------Save button-----------------
         saveButton = new JButton("Save");
-        saveButton.setBounds(375, 630, 350, 30);
+        saveButton.setBounds(10, 630, 350, 30);
         saveButton.setFocusable(false);
         saveButton.addActionListener(e -> {
             if (customerTypeComboBox.getSelectedItem() == "Regular") {
@@ -142,12 +124,6 @@ public class SettingsWindow extends JFrame {
                 maxOccasionalDrinkerResistance = maxResistanceSlider.getValue();
             }
 
-            beerQuantities = new HashMap<>();
-
-            for (String beerName : beerNames) {
-                beerQuantities.put(beerName, beerQuantitySliders.get(beerName).getValue());
-            }
-
             beerStrengths = new HashMap<>();
 
             for (String beerName : beerNames) {
@@ -166,14 +142,13 @@ public class SettingsWindow extends JFrame {
         proceedButton = new JButton("Proceed");
         proceedButton.setFocusable(false);
         proceedButton.setEnabled(false);
-        add(proceedButton).setBounds(10, 630, 350, 30);
+        add(proceedButton).setBounds(10, 665, 350, 30);
         proceedButton.addActionListener(e -> {
             new SimulationWindow(
                     Integer.parseInt(iterationsField.getText()),
                     minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
                     maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
                     (String) customerTypeComboBox.getSelectedItem(),
-                    beerQuantities,
                     beerStrengths
             ).setVisible(true);
             dispose();
