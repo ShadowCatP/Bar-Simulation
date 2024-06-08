@@ -5,7 +5,7 @@ import java.awt.Font;
 //that window using only in automatic mode
 public class HelpWindow extends JFrame {
     JTextField numberOfItersField;
-    JTextField delayBetweenItersField;
+    JTextField delayingBetweenItersField;
     HelpWindow(int minRegResistance, int minConnResistance, int minDrunkardResistance, int minOccasionalDrinkerResistance,
                int maxRegResistance, int maxConnResistance, int maxDrunkardResistance, int maxOccasionalDrinkerResistance,
                String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths){
@@ -38,12 +38,12 @@ public class HelpWindow extends JFrame {
         add(delayBetweenItersLabel);
         //----------------------/numberOfItersLabel-----------------------
 
-        //----------------------delayBetweenItersField-----------------------
-        delayBetweenItersField = new JTextField();
-        delayBetweenItersField.setBounds(150, 200, 300, 30);
-        delayBetweenItersField.setFont(new Font("Arial", Font.BOLD, 16));
-        add(delayBetweenItersField);
-        //----------------------/delayBetweenItersField-----------------------
+        //----------------------delayingBetweenItersField-----------------------
+        delayingBetweenItersField = new JTextField();
+        delayingBetweenItersField.setBounds(150, 200, 300, 30);
+        delayingBetweenItersField.setFont(new Font("Arial", Font.BOLD, 16));
+        add(delayingBetweenItersField);
+        //----------------------/delayingBetweenItersField-----------------------
 
         //----------------------proceedButton-----------------------
         JButton proceedButton = new JButton("Proceed");
@@ -74,7 +74,7 @@ public class HelpWindow extends JFrame {
     }
     private int getDelayBetweenIters(){
         try {
-            int iterations = Integer.parseInt(delayBetweenItersField.getText());
+            int iterations = Integer.parseInt(delayingBetweenItersField.getText());
 
             if (iterations > 10) {
                 return 10;
