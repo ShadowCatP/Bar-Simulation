@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.awt.Font;
 
 // Settings window should have settings for the simulations such as the number of iterations,
 // a range slider for minimal and maximal resistance for each type of customer, a fitness proportionate selection slider for distribution of chances
@@ -11,7 +12,6 @@ import java.util.HashMap;
 // and a button to proceed to the simulation window with settings applied.
 
 public class SettingsWindow extends JFrame {
-    private JTextField iterationsField;
     private JSlider minResistanceSlider;
     private JSlider maxResistanceSlider;
     private JButton saveButton;
@@ -32,22 +32,14 @@ public class SettingsWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        //-----------------Iteration field-----------------
-        add(new JLabel("Number of iterations:")).setBounds(10, 350, 150, 30);
-        iterationsField = new JTextField();
-        iterationsField.setText("10");
-        add(iterationsField).setBounds(160, 350, 150, 30);
-        //-----------------/Iteration field-----------------
-
-        //-----------------Min resistance slider-----------------
-        add(new JLabel("Min resistance:")).setBounds(10, 380, 150, 30);
+        add(new JLabel("Min resistance:")).setBounds(10, 480, 150, 30);
         minResistanceSlider = new JSlider(0, 100);
         minResistanceSlider.setMajorTickSpacing(25);
         minResistanceSlider.setMinorTickSpacing(5);
         minResistanceSlider.setPaintTicks(true);
         minResistanceSlider.setPaintLabels(true);
         minResistanceSlider.setSnapToTicks(true);
-        add(minResistanceSlider).setBounds(10, 410, 300, 50);
+        add(minResistanceSlider).setBounds(10, 510, 300, 50);
         minResistanceSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent e) {
@@ -59,14 +51,14 @@ public class SettingsWindow extends JFrame {
         //-----------------/Min resistance slider-----------------
 
         //-----------------Max resistance slider-----------------
-        add(new JLabel("Max resistance:")).setBounds(10, 450, 150, 30);
+        add(new JLabel("Max resistance:")).setBounds(10, 550, 150, 30);
         maxResistanceSlider = new JSlider(0, 100);
         maxResistanceSlider.setMajorTickSpacing(25);
         maxResistanceSlider.setMinorTickSpacing(5);
         maxResistanceSlider.setPaintTicks(true);
         maxResistanceSlider.setPaintLabels(true);
         maxResistanceSlider.setSnapToTicks(true);
-        add(maxResistanceSlider).setBounds(10, 480, 300, 50);
+        add(maxResistanceSlider).setBounds(10, 580, 300, 50);
         maxResistanceSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent e) {
@@ -112,7 +104,7 @@ public class SettingsWindow extends JFrame {
 
         //-----------------Save button-----------------
         saveButton = new JButton("Save");
-        saveButton.setBounds(375, 630, 350, 30);
+        saveButton.setBounds(375, 720, 350, 30);
         saveButton.setFocusable(false);
         saveButton.addActionListener(e -> {
             if (customerTypeComboBox.getSelectedItem() == "Regular") {
@@ -160,32 +152,67 @@ public class SettingsWindow extends JFrame {
 
         //-----------------/Save button-----------------
 
+        //----------------------manualMode----------------------
+        JRadioButton manualMode = new JRadioButton("You want to go to the next iterations manually");
+        manualMode.setSelected(true);
+        manualMode.setBounds(10, 350, 500, 30);
+        manualMode.setFont(new Font("Arial", Font.BOLD, 16));
+        manualMode.setFocusable(false);
+        add(manualMode);
+        //----------------------/manualMode----------------------
+
+        //----------------------automaticMode----------------------
+        JRadioButton automaticMode = new JRadioButton("You want only to observe the simulation");
+        automaticMode.setBounds(10, 420, 500, 30);
+        automaticMode.setFont(new Font("Arial", Font.BOLD, 16));
+        automaticMode.setFocusable(false);
+        add(automaticMode);
+        //----------------------/automaticMode----------------------
+
+        //----------------------group----------------------
+        ButtonGroup modes = new ButtonGroup();
+        modes.add(automaticMode);
+        modes.add(manualMode);
+        //----------------------/group----------------------
 
         //-----------------Proceed button-----------------
 
         proceedButton = new JButton("Proceed");
         proceedButton.setFocusable(false);
         proceedButton.setEnabled(false);
-        add(proceedButton).setBounds(10, 630, 350, 30);
+        add(proceedButton).setBounds(10, 720, 350, 30);
         proceedButton.addActionListener(e -> {
-            new SimulationWindow(
-                    Integer.parseInt(iterationsField.getText()),
-                    minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
-                    maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
-                    (String) customerTypeComboBox.getSelectedItem(),
-                    beerQuantities,
-                    beerStrengths
-            ).setVisible(true);
             dispose();
+            if (manualMode.isSelected()) {
+                new SimulationWindow(0,
+                        minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
+                        maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
+                        (String) customerTypeComboBox.getSelectedItem(), beerQuantities, beerStrengths
+                ).setVisible(true);
+            } else {
+                new NumberOfIters(
+                        minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
+                        maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
+                        (String) customerTypeComboBox.getSelectedItem(), beerQuantities, beerStrengths
+                ).setVisible(true);
+            }
+            //new SimulationWindow(
+            //        minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
+            //        maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
+            //        (String) customerTypeComboBox.getSelectedItem(),
+            //        beerQuantities,
+            //        beerStrengths
+            //).setVisible(true);
+            //dispose();
         });
 
         //-----------------/Proceed button-----------------
 
 
         //-----------------Customer type dropBox-----------------
-        add(new JLabel("Customer type:")).setBounds(10, 550, 150, 30);
+        add(new JLabel("Customer type:")).setBounds(10, 650, 150, 30);
         customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard", "Occasional Drinker"});
-        add(customerTypeComboBox).setBounds(10, 580, 150, 30);
+        add(customerTypeComboBox).setBounds(10, 680, 150, 30);
         customerTypeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 minResistanceSlider.setValue(50);

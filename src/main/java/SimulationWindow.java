@@ -1,19 +1,26 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.List;
+import java.util.Random;
 
 public class SimulationWindow extends JFrame {
     private JTextArea textArea;
     private JButton startButton, nextIterButton;
-    private int numberOfIterations;
+    private JLabel iterationLabel;
+    private int numberOfIterations; //???
     private double minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance;
     private double maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance;
-    private String customerType;
-    private HashMap<String, Integer> beerQuantities;
-    private HashMap<String, Integer> beerStrengths;
+    private String customerType; //???
+    private HashMap<String, Integer> beerQuantities; //???
+    private HashMap<String, Integer> beerStrengths; //???
     List<Customer> customers;
     Simulation simulation;
-    public SimulationWindow(int numberOfIterations,
+    int maxIterations;
+    int currIteration = 1;
+    public SimulationWindow(int iterations_,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
                             String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
@@ -25,11 +32,12 @@ public class SimulationWindow extends JFrame {
         textArea = new JTextArea();
         textArea.setEditable(false);
 
+
         customers = new ArrayList<>();
+        maxIterations = iterations_;
 
         //-----------------Beer-----------------
         this.customerType = customerType;
-        this.numberOfIterations = numberOfIterations;
         this.beerQuantities = beerQuantities;
         this.beerStrengths = beerStrengths;
         Beer.createBeers(beerQuantities, beerStrengths);
@@ -48,16 +56,20 @@ public class SimulationWindow extends JFrame {
         add(startButton);
         //-----------------/startButton-----------------
 
-        //-----------------nextIterButton-----------------
-        nextIterButton = new JButton("Go to next iteration");
-        nextIterButton.setFocusable(false);
-        nextIterButton.setBounds(200, 700, 200, 50);
-        nextIterButton.setEnabled(false);
-        nextIterButton.addActionListener(e -> {
-            simulation.run();
-        });
-        add(nextIterButton);
-        //-----------------/nextIterButton-----------------
+        if (maxIterations == 0) {
+            //-----------------nextIterButton-----------------
+            nextIterButton = new JButton("Go to next iteration");
+            nextIterButton.setFocusable(false);
+            nextIterButton.setBounds(200, 700, 200, 50);
+            nextIterButton.setEnabled(false);
+            nextIterButton.addActionListener(e -> {
+                iterationLabel.setText("Iteration: " + String.valueOf(++currIteration));
+                simulation.run();
+                repaint();
+            });
+            add(nextIterButton);
+            //-----------------/nextIterButton-----------------
+        }
 
         minRegResistance = minRegResistance_ / 100.0;
         minConnResistance = minConnResistance_ / 100.0;
@@ -71,6 +83,14 @@ public class SimulationWindow extends JFrame {
     }
 
     private void startSimulation() {
+
+        ///------------------------iterationLabel-------------------------------
+        iterationLabel = new JLabel("Iteration: 1");
+        iterationLabel.setBounds(400, 550, 500, 200);
+        iterationLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        add(iterationLabel);
+        ///------------------------/iterationLabel-------------------------------
+
         Random rand = new Random();
 
         int startXAndY = 50, x = startXAndY, y = startXAndY, distanceX = 280, distanceY = 100;
@@ -91,13 +111,34 @@ public class SimulationWindow extends JFrame {
         }
         y = startXAndY;
 
-        DrawAll drawAll = new DrawAll(customers);
-        drawAll.setBounds(0, 0, 1000, 800);
-        repaint();
-        add(drawAll);
-        startButton.setEnabled(false);
-        nextIterButton.setEnabled(true);
 
-        simulation.run();
+        DrawAll drawAll = new DrawAll(customers);
+
+        if (maxIterations == 0) {
+            startButton.setEnabled(false);
+            nextIterButton.setEnabled(true);
+            simulation.run();
+            drawAll.setBounds(0, 0, 1000, 800);
+            repaint();
+            add(drawAll);
+        }
+        else {
+            startButton.setEnabled(false);
+            drawAll.setBounds(0, 0, 1000, 800);
+            Timer timer = new Timer();
+            for (int i = 0; i < maxIterations; i++) {
+                final int finalI = i;
+                TimerTask newTask = new TimerTask() { // Create a new TimerTask for each iteration
+                    @Override
+                    public void run() {
+                        iterationLabel.setText("Iteration: " + String.valueOf(finalI + 1));
+                        simulation.run();
+                        repaint();
+                        add(drawAll);
+                    }
+                };
+                timer.schedule(newTask, i * 1000);
+            }
+        }
     }
 }

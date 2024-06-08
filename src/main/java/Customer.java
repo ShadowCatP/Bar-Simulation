@@ -12,7 +12,7 @@ public abstract class Customer {
     private Beer currentBeer;
     private boolean isRemoved;
     private int x, y;
-    public Color color;
+    protected Color color;
     public abstract Beer chooseBeer(List<Beer> beers);
 
     public Customer (String name, double resistance, int x_, int y_, Color color_) {
@@ -62,6 +62,15 @@ public abstract class Customer {
 
     public boolean isRemoved() {
         return isRemoved;
+    }
+
+    public Color getCurrColor(){
+        if (drunkenness >= 100.0){
+            return Color.red;
+        } else {
+            return color;
+        }
+
     }
 
     public int getX() {

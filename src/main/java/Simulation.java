@@ -54,4 +54,7 @@ public class Simulation {
             }
         }
     }
+    public int currIter(){
+        return currIter;
+    }
 }
