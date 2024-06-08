@@ -184,26 +184,18 @@ public class SettingsWindow extends JFrame {
         proceedButton.addActionListener(e -> {
             dispose();
             if (manualMode.isSelected()) {
-                new SimulationWindow(0,
+                new SimulationWindow(0, 0,
                         minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
                         maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
                         (String) customerTypeComboBox.getSelectedItem(), beerQuantities, beerStrengths
                 ).setVisible(true);
             } else {
-                new NumberOfIters(
+                new HelpWindow(
                         minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
                         maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
                         (String) customerTypeComboBox.getSelectedItem(), beerQuantities, beerStrengths
                 ).setVisible(true);
             }
-            //new SimulationWindow(
-            //        minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
-            //        maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
-            //        (String) customerTypeComboBox.getSelectedItem(),
-            //        beerQuantities,
-            //        beerStrengths
-            //).setVisible(true);
-            //dispose();
         });
 
         //-----------------/Proceed button-----------------

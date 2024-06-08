@@ -20,7 +20,8 @@ public class SimulationWindow extends JFrame {
     Simulation simulation;
     int maxIterations;
     int currIteration = 1;
-    public SimulationWindow(int iterations_,
+    int delaying;
+    public SimulationWindow(int maxIterations_, int delaying_,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
                             String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
@@ -34,8 +35,8 @@ public class SimulationWindow extends JFrame {
 
 
         customers = new ArrayList<>();
-        maxIterations = iterations_;
-
+        maxIterations = maxIterations_;
+        delaying = delaying_;
         //-----------------Beer-----------------
         this.customerType = customerType;
         this.beerQuantities = beerQuantities;
@@ -137,7 +138,7 @@ public class SimulationWindow extends JFrame {
                         add(drawAll);
                     }
                 };
-                timer.schedule(newTask, i * 1000);
+                timer.schedule(newTask, i * delaying * 1000);
             }
         }
     }
