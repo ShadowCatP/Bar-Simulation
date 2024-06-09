@@ -1,10 +1,12 @@
 import java.io.IOException;
 import java.util.List;
-
+import javax.swing.JLabel;
 public class Simulation {
     private List<Customer> customers;
     private List<Beer> beers;
     private CSVWriter csvWriter;
+
+    private int currIter = 0;
 
     public Simulation(List<Customer> customers, List<Beer> beers) {
         this.customers = customers;
@@ -17,28 +19,39 @@ public class Simulation {
         }
     }
 
-    public void run (int iterations, String customerType) {
-        for (int i = 0; i < iterations; i++) {
+    public void run(List<JLabel> drunkennessLabels, List<JLabel> choosenBeers) {
+        int i = 0;
+        for (Customer customer : customers) {
+            Beer chosenBeer = customer.chooseBeer(beers);
+            customer.drink(chosenBeer);
 
-            for (Customer customer : customers) {
-                Beer chosenBeer = customer.chooseBeer(beers);
-                customer.drink(chosenBeer);
+            drunkennessLabels.get(i).setBounds(customer.getX() - 20, customer.getY() - 50, 150, 50);
+            choosenBeers.get(i).setBounds(customer.getX() - 20, customer.getY() + 40, 150, 50);
 
-                try {
-                    csvWriter.writeData(i, customer, customers.size());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            double drunkenness = customer.getDrunkenness();
+            if (drunkenness > 100.0) {
+                drunkenness = 100.0;
             }
 
-            printState(i); // TODO remove after testing
-        }
+            drunkennessLabels.get(i).setText("<html>drunkenness<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + drunkenness + "</html>");
+            drunkennessLabels.get(i).setForeground(customer.getCurrColor());
 
-        try {
-            csvWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            choosenBeers.get(i).setText("     " + customer.getCurrentBeer().getName());
+            choosenBeers.get(i).setForeground(customer.getCurrColor());
+
+            try {
+                csvWriter.writeData(currIter, customer, customers.size());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            i++;
         }
+        // Print the quantity of each type of beer
+        for (Beer beer : beers) {
+            System.out.println("Beer: " + beer.getName() + ", Quantity: " + beer.getQuantity());
+        }
+        printState(currIter); // TODO remove after testing
+        ++currIter;
     }
 
     public void printState(int iteration) {
@@ -57,5 +70,8 @@ public class Simulation {
                         + " Current Beer: " + (customer.getCurrentBeer() != null ? customer.getCurrentBeer().getName() : "None"));
             }
         }
+    }
+    public int currIter(){
+        return currIter;
     }
 }

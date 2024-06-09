@@ -1,11 +1,12 @@
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
 public class OccasionalDrinker extends Customer {
     private int counter = 0;
 
-    public OccasionalDrinker(String name, double resistance) {
-        super(name, resistance);
+    public OccasionalDrinker(String name, double resistance, int x, int y) {
+        super(name, resistance, x, y, Color.blue);
     }
 
 

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
@@ -5,8 +6,8 @@ public class Connoisseur extends Customer {
     private Beer lastBeer = null;
     private int sameBeerCount = 1;
 
-    public Connoisseur(String name, double resistance) {
-        super(name, resistance);
+    public Connoisseur(String name, double resistance, int x, int y) {
+        super(name, resistance, x, y, Color.pink);
     }
 
     @Override

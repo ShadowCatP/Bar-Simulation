@@ -1,13 +1,13 @@
 import java.util.List;
 import java.util.Random;
+import java.awt.Color;
 
 public class Drunkard extends Customer {
     private int counter = 0;
     private boolean removed = false;
     private boolean hasReturned = false;
-
-    public Drunkard(String name, double resistance) {
-        super(name, resistance);
+    public Drunkard(String name, double resistance, int x, int y) {
+        super(name, resistance, x, y, Color.orange);
     }
 
     @Override
@@ -15,10 +15,12 @@ public class Drunkard extends Customer {
         if (removed) {
             counter++;
             if (counter >= 4 && !hasReturned) {
+                color = Color.orange;
                 removed = false;
                 hasReturned = true;
                 counter = 0;
             }
+
             return null;
         } else {
             counter = 0;
@@ -38,14 +40,15 @@ public class Drunkard extends Customer {
         super.drink(beer);
         if (getDrunkenness() > 100.0) {
            remove();
-            setDrunkenness(0.0);
+           if (!hasReturned)
+                setDrunkenness(0.0);
+           color = Color.red;
         }
     }
 
     public boolean isRemoved() {
         return removed;
     }
-
     public boolean hasReturned() {
         return hasReturned;
     }
