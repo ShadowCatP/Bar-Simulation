@@ -206,10 +206,8 @@ public class SimulationWindow extends JFrame {
             }
 
             drunkennessLabels.get(i).setText("<html>drunkenness<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + drunkenness + "</html>");
-            drunkennessLabels.get(i).setForeground(customer.getCurrColor());
 
             choosenBeers.get(i).setText("     " + customer.getCurrentBeer().getName());
-            choosenBeers.get(i).setForeground(customer.getCurrColor());
 
             i++;
         }

@@ -14,10 +14,23 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.*;
 
+// NOT ALL FEATURES WAS IMPLEMENTED OR WAS IMPLEMENTED IN DIFFERENT WAY
 // Settings window should have settings for the simulations such as the number of iterations,
 // a range slider for minimal and maximal resistance for each type of customer, a fitness proportionate selection slider for distribution of chances
 // to pick a beer (will do later) for a customer, a dropBox if user wants to filter the output to show only selected type of customer
 // and a button to proceed to the simulation window with settings applied.
+
+// Structure of config file:
+// Each line represents 1 simulation loop, every parameter should be space-separated
+// Minimum resistance for Regular customers
+// Minimum resistance for Connoisseur customers
+// Minimum resistance for Drunkard customers
+// Minimum resistance for Occasional Drinker customers
+// Maximum resistance for Regular customers
+// Maximum resistance for Connoisseur customers
+// Maximum resistance for Drunkard customers
+// Maximum resistance for Occasional Drinker customers
+// Strength of each beer type ("Corona Light", "Heineken", "Blackout Stout", "Guinness")
 
 public class SettingsWindow extends JFrame {
     private JSlider minResistanceSlider;
