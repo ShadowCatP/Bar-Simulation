@@ -6,7 +6,7 @@ public class OccasionalDrinker extends Customer {
     private int counter = 0;
 
     public OccasionalDrinker(String name, double resistance, int x, int y) {
-        super(name, resistance, x, y, Color.green);
+        super(name, resistance, x, y, Color.blue);
     }
 
 

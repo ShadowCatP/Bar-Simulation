@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-class DrawAll extends JPanel {
+class DrawCustomers extends JPanel {
     List<Customer> customers;
-    DrawAll(List<Customer> customers_) {
+    DrawCustomers(List<Customer> customers_) {
         customers = customers_;
     }
     @Override

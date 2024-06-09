@@ -102,6 +102,36 @@ public class SettingsWindow extends JFrame {
         }
         //-----------------/Beer strength sliders-----------------
 
+        //--------------------------iterationLabel--------------------------
+        JLabel iterationLabel = new JLabel("Choose simulation play mode:");
+        iterationLabel.setBounds(10, 250, 500, 200);
+        iterationLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(iterationLabel);
+        //--------------------------/iterationLabel--------------------------
+
+        //----------------------manualMode----------------------
+        JRadioButton manualMode = new JRadioButton("Manual mode");
+        manualMode.setSelected(true);
+        manualMode.setBounds(10, 385, 500, 30);
+        manualMode.setFont(new Font("Arial", Font.BOLD, 16));
+        manualMode.setFocusable(false);
+        add(manualMode);
+        //----------------------/manualMode----------------------
+
+        //----------------------automaticMode----------------------
+        JRadioButton automaticMode = new JRadioButton("Auto mode");
+        automaticMode.setBounds(10, 430, 500, 30);
+        automaticMode.setFont(new Font("Arial", Font.BOLD, 16));
+        automaticMode.setFocusable(false);
+        add(automaticMode);
+        //----------------------/automaticMode----------------------
+
+        //----------------------groupOfModes----------------------
+        ButtonGroup modes = new ButtonGroup();
+        modes.add(automaticMode);
+        modes.add(manualMode);
+        //----------------------/groupOfModes----------------------
+
         //-----------------Save button-----------------
         saveButton = new JButton("Save");
         saveButton.setBounds(375, 720, 350, 30);
@@ -149,34 +179,9 @@ public class SettingsWindow extends JFrame {
             proceedButton.setEnabled(true);
         });
         add(saveButton);
-
         //-----------------/Save button-----------------
 
-        //----------------------manualMode----------------------
-        JRadioButton manualMode = new JRadioButton("You want to go to the next iterations manually");
-        manualMode.setSelected(true);
-        manualMode.setBounds(10, 350, 500, 30);
-        manualMode.setFont(new Font("Arial", Font.BOLD, 16));
-        manualMode.setFocusable(false);
-        add(manualMode);
-        //----------------------/manualMode----------------------
-
-        //----------------------automaticMode----------------------
-        JRadioButton automaticMode = new JRadioButton("You want only to observe the simulation");
-        automaticMode.setBounds(10, 420, 500, 30);
-        automaticMode.setFont(new Font("Arial", Font.BOLD, 16));
-        automaticMode.setFocusable(false);
-        add(automaticMode);
-        //----------------------/automaticMode----------------------
-
-        //----------------------group----------------------
-        ButtonGroup modes = new ButtonGroup();
-        modes.add(automaticMode);
-        modes.add(manualMode);
-        //----------------------/group----------------------
-
         //-----------------Proceed button-----------------
-
         proceedButton = new JButton("Proceed");
         proceedButton.setFocusable(false);
         proceedButton.setEnabled(false);

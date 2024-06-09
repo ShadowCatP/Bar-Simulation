@@ -18,6 +18,8 @@ public class SimulationWindow extends JFrame {
     private HashMap<String, Integer> beerStrengths; //???
     List<Customer> customers;
     Simulation simulation;
+    List<JLabel> drunkennessLabels;
+    List<JLabel> choosenBeers;
     int maxIterations;
     int currIteration = 1;
     int delaying;
@@ -26,7 +28,8 @@ public class SimulationWindow extends JFrame {
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
                             String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
         setTitle("Simulation Window");
-        setSize(1000, 800);
+        setSize(1200, 900);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
@@ -44,10 +47,25 @@ public class SimulationWindow extends JFrame {
         Beer.createBeers(beerQuantities, beerStrengths);
         //-----------------/Beer-----------------
 
+        //---------------------drunkennessLabels--and--choosenBeers---------------------
+        drunkennessLabels = new ArrayList<>();
+        choosenBeers = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            drunkennessLabels.add(new JLabel());
+            drunkennessLabels.get(i).setFont(new Font("Arial", Font.BOLD, 14));
+            add(drunkennessLabels.get(i));
+
+            choosenBeers.add(new JLabel());
+            choosenBeers.get(i).setFont(new Font("Arial", Font.BOLD, 14));
+            add(choosenBeers.get(i));
+        }
+        //---------------------/drunkennessLabels--and--choosenBeers---------------------
+
+
         //-----------------startButton-----------------
         startButton = new JButton("Start Simulation");
         startButton.setFocusable(false);
-        startButton.setBounds(600, 700, 200, 50);
+        startButton.setBounds(650, 800, 200, 50);
 
         startButton.addActionListener(e -> {
             simulation = new Simulation(customers, Beer.getBeers());
@@ -61,11 +79,11 @@ public class SimulationWindow extends JFrame {
             //-----------------nextIterButton-----------------
             nextIterButton = new JButton("Go to next iteration");
             nextIterButton.setFocusable(false);
-            nextIterButton.setBounds(200, 700, 200, 50);
+            nextIterButton.setBounds(300, 800, 200, 50);
             nextIterButton.setEnabled(false);
             nextIterButton.addActionListener(e -> {
                 iterationLabel.setText("Iteration: " + String.valueOf(++currIteration));
-                simulation.run();
+                simulation.run(drunkennessLabels, choosenBeers);
                 repaint();
             });
             add(nextIterButton);
@@ -85,46 +103,81 @@ public class SimulationWindow extends JFrame {
 
     private void startSimulation() {
 
-        ///------------------------iterationLabel-------------------------------
+        //------------------------iterationLabel-------------------------------
         iterationLabel = new JLabel("Iteration: 1");
-        iterationLabel.setBounds(400, 550, 500, 200);
+        iterationLabel.setBounds(525, 680, 500, 200);
         iterationLabel.setFont(new Font("Arial", Font.BOLD, 22));
         add(iterationLabel);
-        ///------------------------/iterationLabel-------------------------------
+        //------------------------/iterationLabel-------------------------------
+
+        //------------------------RegularsLabel-------------------------------
+        JLabel RegularsLabel = new JLabel("<html>Regular<br>drinkers</html>");
+        RegularsLabel.setBounds(1050, -25, 500, 200);
+        RegularsLabel.setForeground(Color.DARK_GRAY);
+        RegularsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        add(RegularsLabel);
+        //------------------------/RegularsLabel-------------------------------
+
+        //------------------------ConnoisseursLabel-------------------------------
+        JLabel ConnoisseursLabel = new JLabel("<html>Connoisseur<br>drinkers</html>");
+        ConnoisseursLabel.setBounds(1050, 170, 500, 200);
+        ConnoisseursLabel.setForeground(Color.PINK);
+        ConnoisseursLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        add(ConnoisseursLabel);
+        //------------------------/ConnoisseursLabel-------------------------------
+
+        //------------------------DrunkardsLabel-------------------------------
+        JLabel DrunkardsLabel = new JLabel("<html>Drunkard<br>drinkers</html>");
+        DrunkardsLabel.setBounds(1050, 370, 500, 200);
+        DrunkardsLabel.setForeground(Color.ORANGE);
+        DrunkardsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        add(DrunkardsLabel);
+        //------------------------/DrunkardsLabel-------------------------------
+
+        //------------------------OccasionalDrinkersLabel-------------------------------
+        JLabel OccasionalDrinkersLabel = new JLabel("<html>Occasional<br>drinkers</html>");
+        OccasionalDrinkersLabel.setBounds(1050, 570, 500, 200);
+        OccasionalDrinkersLabel.setForeground(Color.BLUE);
+        OccasionalDrinkersLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        add(OccasionalDrinkersLabel);
+        //------------------------/OccasionalDrinkersLabel-------------------------------
+
 
         Random rand = new Random();
 
-        int startXAndY = 50, x = startXAndY, y = startXAndY, distanceX = 280, distanceY = 100;
+        int startX = 30, startY = 50, x = startX, y = startY, distanceX = 180, distanceY = 200;
         double resistance;
+
         for (int i = 0; i < 6; i++) {
             resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
             customers.add(new Regular("Regular_" + (i + 1), resistance, x, y));
-            x += distanceX;
+            y += distanceY;
             resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
             customers.add(new Connoisseur("Connoisseur_" + (i + 1), resistance, x, y));
-            x += distanceX;
+            y += distanceY;
             resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) * rand.nextDouble();
             customers.add(new Drunkard("Drunkard_" + (i + 1), resistance, x, y));
-            x += distanceX;
+            y += distanceY;
             resistance = minOccasionalDrinkerResistance + (maxOccasionalDrinkerResistance - minOccasionalDrinkerResistance) * rand.nextDouble();
             customers.add(new OccasionalDrinker("OccasionalDrinker_" + (i + 1), resistance, x, y));
-            x = startXAndY; y += distanceY;
+            y = startY; x += distanceX;
         }
-        y = startXAndY;
+        x = startX;
+        y = startY;
 
 
-        DrawAll drawAll = new DrawAll(customers);
+        DrawCustomers drawAll = new DrawCustomers(customers);
+
+        startButton.setEnabled(false);
 
         if (maxIterations == 0) {
-            startButton.setEnabled(false);
             nextIterButton.setEnabled(true);
-            simulation.run();
+            simulation.run(drunkennessLabels, choosenBeers);
             drawAll.setBounds(0, 0, 1000, 800);
             repaint();
             add(drawAll);
         }
         else {
-            startButton.setEnabled(false);
             drawAll.setBounds(0, 0, 1000, 800);
             Timer timer = new Timer();
             for (int i = 0; i < maxIterations; i++) {
@@ -133,7 +186,7 @@ public class SimulationWindow extends JFrame {
                     @Override
                     public void run() {
                         iterationLabel.setText("Iteration: " + String.valueOf(finalI + 1));
-                        simulation.run();
+                        simulation.run(drunkennessLabels, choosenBeers);
                         repaint();
                         add(drawAll);
                     }

@@ -40,7 +40,8 @@ public class Drunkard extends Customer {
         super.drink(beer);
         if (getDrunkenness() > 100.0) {
            remove();
-           setDrunkenness(0.0);
+           if (!hasReturned)
+                setDrunkenness(0.0);
            color = Color.red;
         }
     }

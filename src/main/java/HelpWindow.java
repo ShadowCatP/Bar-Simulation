@@ -76,7 +76,7 @@ public class HelpWindow extends JFrame {
         try {
             int iterations = Integer.parseInt(delayingBetweenItersField.getText());
 
-            if (iterations > 10) {
+            if (iterations > 10 || iterations < 1) {
                 return 10;
             } else {
                 return iterations;
