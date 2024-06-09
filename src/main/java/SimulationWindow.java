@@ -33,6 +33,7 @@ public class SimulationWindow extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         textArea = new JTextArea();
         textArea.setEditable(false);
 
