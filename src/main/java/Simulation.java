@@ -48,7 +48,7 @@ public class Simulation {
         }
         // Print the quantity of each type of beer
         for (Beer beer : beers) {
-            System.out.println("Beer: " + beer.getName() + ", Quantity: " + beer.getQuantity());
+            System.out.println("Beer: " + beer.getName());
         }
         printState(currIter); // TODO remove after testing
         ++currIter;

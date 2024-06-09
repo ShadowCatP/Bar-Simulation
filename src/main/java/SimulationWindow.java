@@ -23,7 +23,8 @@ public class SimulationWindow extends JFrame {
     public SimulationWindow(int maxIterations_, int delaying_,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
-                            String customerType, HashMap<String, Integer> beerStrengths) {
+                            HashMap<String, Integer> beerStrengths) {
+
         setTitle("Simulation Window");
         setSize(1200, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +41,7 @@ public class SimulationWindow extends JFrame {
         delaying = delaying_;
 
         //-----------------Beer-----------------
-        Beer.createBeers(beerQuantities);
+        Beer.createBeers(beerStrengths);
         //-----------------/Beer-----------------
 
         //---------------------drunkennessLabels--and--choosenBeers---------------------

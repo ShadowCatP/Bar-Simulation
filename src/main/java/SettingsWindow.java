@@ -25,7 +25,7 @@ public class SettingsWindow extends JFrame {
 
     SettingsWindow() {
         setTitle("Settings");
-        setSize(380, 800);
+        setSize(380, 825);
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,7 +116,7 @@ public class SettingsWindow extends JFrame {
 
         //-----------------Save button-----------------
         saveButton = new JButton("Save");
-        saveButton.setBounds(375, 720, 350, 30);
+        saveButton.setBounds(10, 720, 350, 30);
         saveButton.setFocusable(false);
         saveButton.addActionListener(e -> {
             if (customerTypeComboBox.getSelectedItem() == "Regular") {
@@ -164,7 +164,7 @@ public class SettingsWindow extends JFrame {
         proceedButton = new JButton("Proceed");
         proceedButton.setFocusable(false);
         proceedButton.setEnabled(false);
-        add(proceedButton).setBounds(10, 720, 350, 30);
+        add(proceedButton).setBounds(10, 755, 350, 30);
         proceedButton.addActionListener(e -> {
             dispose();
             if (manualMode.isSelected()) {
@@ -177,7 +177,7 @@ public class SettingsWindow extends JFrame {
                 new HelpWindow(
                         minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
                         maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
-                        (String) customerTypeComboBox.getSelectedItem(), beerQuantities, beerStrengths
+                        beerStrengths
                 ).setVisible(true);
             }
         });

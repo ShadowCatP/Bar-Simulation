@@ -8,7 +8,7 @@ public class HelpWindow extends JFrame {
     JTextField delayingBetweenItersField;
     HelpWindow(int minRegResistance, int minConnResistance, int minDrunkardResistance, int minOccasionalDrinkerResistance,
                int maxRegResistance, int maxConnResistance, int maxDrunkardResistance, int maxOccasionalDrinkerResistance,
-               String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths){
+               HashMap<String, Integer> beerStrengths){
 
         setTitle("Number of iterations window");
         setSize(600, 400);
