@@ -72,20 +72,20 @@ public class SimulationWindow extends JFrame {
         add(startButton);
         //-----------------/startButton-----------------
 
+        //-----------------nextIterButton-----------------
         if (maxIterations == 0) {
-            //-----------------nextIterButton-----------------
             nextIterButton = new JButton("Go to next iteration");
             nextIterButton.setFocusable(false);
             nextIterButton.setBounds(300, 800, 200, 50);
             nextIterButton.setEnabled(false);
             nextIterButton.addActionListener(e -> {
                 iterationLabel.setText("Iteration: " + String.valueOf(++currIteration));
-                simulation.run(drunkennessLabels, choosenBeers);
+                runSimulationWithGUI();
                 repaint();
             });
             add(nextIterButton);
-            //-----------------/nextIterButton-----------------
         }
+        //-----------------/nextIterButton-----------------
 
         minRegResistance = minRegResistance_ / 100.0;
         minConnResistance = minConnResistance_ / 100.0;
@@ -169,7 +169,7 @@ public class SimulationWindow extends JFrame {
 
         if (maxIterations == 0) {
             nextIterButton.setEnabled(true);
-            simulation.run(drunkennessLabels, choosenBeers);
+            runSimulationWithGUI();
             drawAll.setBounds(0, 0, 1000, 800);
             repaint();
             add(drawAll);
@@ -179,11 +179,11 @@ public class SimulationWindow extends JFrame {
             Timer timer = new Timer();
             for (int i = 0; i < maxIterations; i++) {
                 final int finalI = i;
-                TimerTask newTask = new TimerTask() { // Create a new TimerTask for each iteration
+                TimerTask newTask = new TimerTask() {
                     @Override
                     public void run() {
                         iterationLabel.setText("Iteration: " + String.valueOf(finalI + 1));
-                        simulation.run(drunkennessLabels, choosenBeers);
+                        runSimulationWithGUI();
                         repaint();
                         add(drawAll);
                     }
@@ -191,5 +191,29 @@ public class SimulationWindow extends JFrame {
                 timer.schedule(newTask, i * delaying * 1000);
             }
         }
+    }
+
+    public void runSimulationWithGUI() {
+        simulation.run();
+
+        int i = 0;
+        for (Customer customer : customers) {
+            drunkennessLabels.get(i).setBounds(customer.getX() - 20, customer.getY() - 50, 150, 50);
+            choosenBeers.get(i).setBounds(customer.getX() - 20, customer.getY() + 40, 150, 50);
+
+            double drunkenness = customer.getDrunkenness();
+            if (drunkenness > 100.0) {
+                drunkenness = 100.0;
+            }
+
+            drunkennessLabels.get(i).setText("<html>drunkenness<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + drunkenness + "</html>");
+            drunkennessLabels.get(i).setForeground(customer.getCurrColor());
+
+            choosenBeers.get(i).setText("     " + customer.getCurrentBeer().getName());
+            choosenBeers.get(i).setForeground(customer.getCurrColor());
+
+            i++;
+        }
+        repaint();
     }
 }

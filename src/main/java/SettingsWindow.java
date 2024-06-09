@@ -1,10 +1,10 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.awt.Font;
 
 // Settings window should have settings for the simulations such as the number of iterations,
 // a range slider for minimal and maximal resistance for each type of customer, a fitness proportionate selection slider for distribution of chances
@@ -200,7 +200,7 @@ public class SettingsWindow extends JFrame {
 
 
     public static void main(String[] args) {
-        // TODO implement the feature to run simulation fast multiple times if config file is provided
-        SwingUtilities.invokeLater(() -> new SettingsWindow().setVisible(true));
+            SwingUtilities.invokeLater(() -> new SettingsWindow().setVisible(true));
     }
+
 }
