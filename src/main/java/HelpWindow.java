@@ -54,8 +54,7 @@ public class HelpWindow extends JFrame {
         proceedButton.addActionListener(e-> {
             new SimulationWindow(
                     getNumberOfItersField(), getDelayBetweenIters(), minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
-                    maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
-                    customerType, beerQuantities, beerStrengths).setVisible(true);
+                    maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance, beerStrengths).setVisible(true);
             dispose();
         });
         add(proceedButton);

@@ -13,9 +13,6 @@ public class SimulationWindow extends JFrame {
     private int numberOfIterations; //???
     private double minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance;
     private double maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance;
-    private String customerType; //???
-    private HashMap<String, Integer> beerQuantities; //???
-    private HashMap<String, Integer> beerStrengths; //???
     List<Customer> customers;
     Simulation simulation;
     List<JLabel> drunkennessLabels;
@@ -26,7 +23,7 @@ public class SimulationWindow extends JFrame {
     public SimulationWindow(int maxIterations_, int delaying_,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
-                            String customerType, HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
+                            HashMap<String, Integer> beerQuantities) {
         setTitle("Simulation Window");
         setSize(1200, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,11 +38,9 @@ public class SimulationWindow extends JFrame {
         customers = new ArrayList<>();
         maxIterations = maxIterations_;
         delaying = delaying_;
+
         //-----------------Beer-----------------
-        this.customerType = customerType;
-        this.beerQuantities = beerQuantities;
-        this.beerStrengths = beerStrengths;
-        Beer.createBeers(beerQuantities, beerStrengths);
+        Beer.createBeers(beerQuantities);
         //-----------------/Beer-----------------
 
         //---------------------drunkennessLabels--and--choosenBeers---------------------

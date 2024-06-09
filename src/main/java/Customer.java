@@ -58,7 +58,7 @@ public abstract class Customer {
 
     public Beer getCurrentBeer() {
         if (currentBeer == null || drunkenness >= 100.0 || drunkenness == 0.0) {
-            return new Beer("None", 0, 0);
+            return new Beer("None", 0);
         }
         else {
         return currentBeer;

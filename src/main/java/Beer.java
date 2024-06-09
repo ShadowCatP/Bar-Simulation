@@ -10,19 +10,19 @@ public class Beer {
     private int strength;
     private int quantity;
 
-    public Beer(String name, int strength, int quantity) {
+    public Beer(String name, int strength) {
         this.name = name;
         this.strength = strength;
         this.quantity = quantity;
     }
 
-    static void createBeers(HashMap<String, Integer> beerQuantities, HashMap<String, Integer> beerStrengths) {
+    static void createBeers(HashMap<String, Integer> beerStrengths) {
         beers = new Vector<Beer>();
-        for (Map.Entry<String, Integer> entry : beerQuantities.entrySet()) {
+        for (Map.Entry<String, Integer> entry : beerStrengths.entrySet()) {
             String beerName = entry.getKey();
             int quantity = entry.getValue();
             int strength = beerStrengths.get(beerName);
-            beers.add(new Beer(beerName, strength, quantity));
+            beers.add(new Beer(beerName, strength));
         }
     }
 

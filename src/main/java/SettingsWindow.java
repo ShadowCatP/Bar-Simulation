@@ -192,7 +192,7 @@ public class SettingsWindow extends JFrame {
                 new SimulationWindow(0, 0,
                         minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance,
                         maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance,
-                        (String) customerTypeComboBox.getSelectedItem(), beerQuantities, beerStrengths
+                        beerStrengths
                 ).setVisible(true);
             } else {
                 new HelpWindow(
