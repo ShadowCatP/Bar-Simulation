@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JLabel;
 public class Simulation {
     private List<Customer> customers;
     private List<Beer> beers;
@@ -8,12 +7,12 @@ public class Simulation {
 
     private int currIter = 0;
 
-    public Simulation(List<Customer> customers, List<Beer> beers) {
+    public Simulation(List<Customer> customers, List<Beer> beers, int simulationNumber) {
         this.customers = customers;
         this.beers = beers;
 
         try {
-            csvWriter = new CSVWriter("simulation_results.csv");
+            csvWriter = new CSVWriter("simulation_results_" + simulationNumber + ".csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -26,7 +25,7 @@ public class Simulation {
 
             double drunkenness = customer.getDrunkenness();
             if (drunkenness > 100.0) {
-                drunkenness = 100.0;
+                customer.setDrunkenness(100.0);
             }
 
             try {
@@ -39,7 +38,8 @@ public class Simulation {
         for (Beer beer : beers) {
             System.out.println("Beer: " + beer.getName());
         }
-        printState(currIter); // TODO remove after testing
+
+        printState(currIter);
         ++currIter;
     }
 
@@ -60,7 +60,12 @@ public class Simulation {
             }
         }
     }
-    public int currIter(){
-        return currIter;
+
+    public void closeCSVWriter() {
+        try {
+            csvWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

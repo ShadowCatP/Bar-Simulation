@@ -4,7 +4,15 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.*;
 
 // Settings window should have settings for the simulations such as the number of iterations,
 // a range slider for minimal and maximal resistance for each type of customer, a fitness proportionate selection slider for distribution of chances
@@ -17,9 +25,9 @@ public class SettingsWindow extends JFrame {
     private JButton saveButton;
     private JButton proceedButton;
     private JComboBox<String> customerTypeComboBox;
-    private int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50, minOccasionalDrinkerResistance = 50;
-    private int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50, maxOccasionalDrinkerResistance = 50;
-    private String[] beerNames = {"Corona Light", "Heineken", "Blackout Stout", "Guinness"};
+    private static int minRegResistance = 50, minConnResistance = 50, minDrunkardResistance = 50, minOccasionalDrinkerResistance = 50;
+    private static int maxRegResistance = 50, maxConnResistance = 50, maxDrunkardResistance = 50, maxOccasionalDrinkerResistance = 50;
+    private static String[] beerNames = {"Corona Light", "Heineken", "Blackout Stout", "Guinness"};
     private HashMap<String, JSlider> beerStrengthSliders;
     private HashMap<String, Integer> beerStrengths;
 
@@ -200,7 +208,87 @@ public class SettingsWindow extends JFrame {
 
 
     public static void main(String[] args) {
+        // Cleaning results directory before the program runs
+        File directory = new File("simulation_results");
+        if (directory.exists() && directory.isDirectory()) {
+            deleteExistingCSVFiles(directory.getPath());
+        }
+
+        // This segment is responsible for reading parameters from config file and running program in fast mode
+        // without GUI with ability to run multiple simulations in order to get results for research
+        if (args.length > 0) {
+            File configFile = new File(args[0]);
+            if (configFile.exists() && configFile.isFile()) {
+                try (Scanner scanner = new Scanner(configFile)) {
+                    int simulationNumber = 1;
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        String[] parameters = line.split(" ");
+                        if (parameters.length >= 8 + beerNames.length) {
+                            minRegResistance = Integer.parseInt(parameters[0]);
+                            minConnResistance = Integer.parseInt(parameters[1]);
+                            minDrunkardResistance = Integer.parseInt(parameters[2]);
+                            minOccasionalDrinkerResistance = Integer.parseInt(parameters[3]);
+                            maxRegResistance = Integer.parseInt(parameters[4]);
+                            maxConnResistance = Integer.parseInt(parameters[5]);
+                            maxDrunkardResistance = Integer.parseInt(parameters[6]);
+                            maxOccasionalDrinkerResistance = Integer.parseInt(parameters[7]);
+                            HashMap<String, Integer> beerStrengths = new HashMap<>();
+                            for (int i = 0; i < beerNames.length; i++) {
+                                beerStrengths.put(beerNames[i], Integer.parseInt(parameters[8 + i]));
+                            }
+
+                            Beer.createBeers(beerStrengths);
+                            List<Beer> beers = Beer.getBeers();
+
+                            // I dunno how to make it better, but i know that is possible
+                            List<Customer> customers = new ArrayList<>();
+                            Random rand = new Random();
+                            for (int i = 0; i < 6; i++) {
+                                double resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
+                                customers.add(new Regular("Regular_" + (i + 1), resistance, 0, 0));
+                                resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
+                                customers.add(new Connoisseur("Connoisseur_" + (i + 1), resistance, 0, 0));
+                                resistance = minDrunkardResistance + (maxDrunkardResistance - minDrunkardResistance) * rand.nextDouble();
+                                customers.add(new Drunkard("Drunkard_" + (i + 1), resistance, 0, 0));
+                                resistance = minOccasionalDrinkerResistance + (maxOccasionalDrinkerResistance - minOccasionalDrinkerResistance) * rand.nextDouble();
+                                customers.add(new OccasionalDrinker("OccasionalDrinker_" + (i + 1), resistance, 0, 0));
+                            }
+
+                            Simulation simulation = new Simulation(customers, beers, simulationNumber);
+
+                            for (int i = 0; i < 20; i++) {
+                                simulation.run();
+                            }
+
+                            simulationNumber++;
+
+                            // The program will close the csv writer only after all rows are printed
+                            simulation.closeCSVWriter();
+                        }
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("Config file not found.");
+                }
+            } else {
+                System.out.println("Invalid file path.");
+            }
+        } else {
             SwingUtilities.invokeLater(() -> new SettingsWindow().setVisible(true));
+        }
+    }
+
+    private static void deleteExistingCSVFiles(String directoryPath) {
+        Path dir = Paths.get(directoryPath);
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+            for (Path path : stream) {
+                if (path.toString().endsWith(".csv")) {
+                    Files.delete(path);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error deleting CSV files: " + e.getMessage());
+        }
     }
 
 }

@@ -10,9 +10,8 @@ public class SimulationWindow extends JFrame {
     private JTextArea textArea;
     private JButton startButton, nextIterButton;
     private JLabel iterationLabel;
-    private int numberOfIterations;
-    private double minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance;
-    private double maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance;
+    private int minRegResistance, minConnResistance, minDrunkardResistance, minOccasionalDrinkerResistance;
+    private int maxRegResistance, maxConnResistance, maxDrunkardResistance, maxOccasionalDrinkerResistance;
     List<Customer> customers;
     Simulation simulation;
     List<JLabel> drunkennessLabels;
@@ -65,7 +64,7 @@ public class SimulationWindow extends JFrame {
         startButton.setBounds(650, 800, 200, 50);
 
         startButton.addActionListener(e -> {
-            simulation = new Simulation(customers, Beer.getBeers());
+            simulation = new Simulation(customers, Beer.getBeers(), 1);
             startSimulation();
         });
 
@@ -87,15 +86,15 @@ public class SimulationWindow extends JFrame {
         }
         //-----------------/nextIterButton-----------------
 
-        minRegResistance = minRegResistance_ / 100.0;
-        minConnResistance = minConnResistance_ / 100.0;
-        minDrunkardResistance = minDrunkardResistance_ / 100.0;
-        minOccasionalDrinkerResistance = minOccasionalDrinkerResistance_ / 100.0;
+        minRegResistance = minRegResistance_;
+        minConnResistance = minConnResistance_;
+        minDrunkardResistance = minDrunkardResistance_;
+        minOccasionalDrinkerResistance = minOccasionalDrinkerResistance_;
 
-        maxRegResistance = maxRegResistance_ / 100.0;
-        maxConnResistance = maxConnResistance_ / 100.0;
-        maxDrunkardResistance = maxDrunkardResistance_ / 100.0;
-        maxOccasionalDrinkerResistance = maxOccasionalDrinkerResistance_ / 100.0;
+        maxRegResistance = maxRegResistance_;
+        maxConnResistance = maxConnResistance_;
+        maxDrunkardResistance = maxDrunkardResistance_;
+        maxOccasionalDrinkerResistance = maxOccasionalDrinkerResistance_;
     }
 
     private void startSimulation() {

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,7 +11,11 @@ public class CSVWriter {
     private FileWriter fileWriter;
 
     public CSVWriter(String fileName) throws IOException {
-        fileWriter = new FileWriter(fileName);
+        File directory = new File("simulation_results");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        fileWriter = new FileWriter(new File(directory, fileName));
         fileWriter.append(CSV_HEADER);
         fileWriter.append("\n");
     }
