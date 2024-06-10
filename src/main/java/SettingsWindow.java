@@ -43,6 +43,7 @@ public class SettingsWindow extends JFrame {
     private static String[] beerNames = {"Corona Light", "Heineken", "Blackout Stout", "Guinness"};
     private HashMap<String, JSlider> beerStrengthSliders;
     private HashMap<String, Integer> beerStrengths;
+    private JPanel resistancePanel;
 
     SettingsWindow() {
         setTitle("Settings");
@@ -52,14 +53,13 @@ public class SettingsWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        add(new JLabel("Min resistance:")).setBounds(10, 480, 150, 30);
+        //-----------------Min resistance slider-----------------
         minResistanceSlider = new JSlider(0, 100);
         minResistanceSlider.setMajorTickSpacing(25);
         minResistanceSlider.setMinorTickSpacing(5);
         minResistanceSlider.setPaintTicks(true);
         minResistanceSlider.setPaintLabels(true);
         minResistanceSlider.setSnapToTicks(true);
-        add(minResistanceSlider).setBounds(10, 510, 300, 50);
         minResistanceSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent e) {
@@ -71,14 +71,12 @@ public class SettingsWindow extends JFrame {
         //-----------------/Min resistance slider-----------------
 
         //-----------------Max resistance slider-----------------
-        add(new JLabel("Max resistance:")).setBounds(10, 550, 150, 30);
         maxResistanceSlider = new JSlider(0, 100);
         maxResistanceSlider.setMajorTickSpacing(25);
         maxResistanceSlider.setMinorTickSpacing(5);
         maxResistanceSlider.setPaintTicks(true);
         maxResistanceSlider.setPaintLabels(true);
         maxResistanceSlider.setSnapToTicks(true);
-        add(maxResistanceSlider).setBounds(10, 580, 300, 50);
         maxResistanceSlider.addChangeListener(new ChangeListener()
         {
             public void stateChanged(ChangeEvent e) {
@@ -107,7 +105,7 @@ public class SettingsWindow extends JFrame {
 
         //--------------------------iterationLabel--------------------------
         JLabel iterationLabel = new JLabel("Choose simulation play mode:");
-        iterationLabel.setBounds(10, 250, 500, 200);
+        iterationLabel.setBounds(10, 580, 500, 30);
         iterationLabel.setFont(new Font("Arial", Font.BOLD, 18));
         add(iterationLabel);
         //--------------------------/iterationLabel--------------------------
@@ -115,7 +113,7 @@ public class SettingsWindow extends JFrame {
         //----------------------manualMode----------------------
         JRadioButton manualMode = new JRadioButton("Manual mode");
         manualMode.setSelected(true);
-        manualMode.setBounds(10, 385, 500, 30);
+        manualMode.setBounds(10, 620, 500, 30);
         manualMode.setFont(new Font("Arial", Font.BOLD, 16));
         manualMode.setFocusable(false);
         add(manualMode);
@@ -123,7 +121,7 @@ public class SettingsWindow extends JFrame {
 
         //----------------------automaticMode----------------------
         JRadioButton automaticMode = new JRadioButton("Auto mode");
-        automaticMode.setBounds(10, 430, 500, 30);
+        automaticMode.setBounds(10, 660, 500, 30);
         automaticMode.setFont(new Font("Arial", Font.BOLD, 16));
         automaticMode.setFocusable(false);
         add(automaticMode);
@@ -157,12 +155,12 @@ public class SettingsWindow extends JFrame {
                 maxOccasionalDrinkerResistance = maxResistanceSlider.getValue();
             }
             else {
-                minRegResistance               = minResistanceSlider.getValue();
-                maxRegResistance               = maxResistanceSlider.getValue();
-                minConnResistance              = minResistanceSlider.getValue();
-                maxConnResistance              = maxResistanceSlider.getValue();
-                minDrunkardResistance          = minResistanceSlider.getValue();
-                maxDrunkardResistance          = maxResistanceSlider.getValue();
+                minRegResistance = minResistanceSlider.getValue();
+                maxRegResistance = maxResistanceSlider.getValue();
+                minConnResistance = minResistanceSlider.getValue();
+                maxConnResistance = maxResistanceSlider.getValue();
+                minDrunkardResistance = minResistanceSlider.getValue();
+                maxDrunkardResistance = maxResistanceSlider.getValue();
                 minOccasionalDrinkerResistance = minResistanceSlider.getValue();
                 maxOccasionalDrinkerResistance = maxResistanceSlider.getValue();
             }
@@ -207,9 +205,7 @@ public class SettingsWindow extends JFrame {
 
 
         //-----------------Customer type dropBox-----------------
-        add(new JLabel("Customer type:")).setBounds(10, 650, 150, 30);
         customerTypeComboBox = new JComboBox<>(new String[]{"All", "Regular", "Connoisseur", "Drunkard", "Occasional Drinker"});
-        add(customerTypeComboBox).setBounds(10, 680, 150, 30);
         customerTypeComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 minResistanceSlider.setValue(50);
@@ -217,6 +213,24 @@ public class SettingsWindow extends JFrame {
             }
         });
         //-----------------/Customer type dropBox-----------------
+
+        //-----------------Resistance panel-----------------
+        resistancePanel = new JPanel();
+        resistancePanel.setLayout(null);
+        resistancePanel.setBounds(10, 350, 350, 200);
+        resistancePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        resistancePanel.setBackground(Color.lightGray);
+
+        resistancePanel.add(new JLabel("Min resistance:")).setBounds(10, 0, 150, 30);
+        resistancePanel.add(minResistanceSlider).setBounds(10, 25, 325, 40);
+        resistancePanel.add(new JLabel("Max resistance:")).setBounds(10, 60, 150, 30);
+        resistancePanel.add(maxResistanceSlider).setBounds(10, 85, 325, 40);
+
+        resistancePanel.add(new JLabel("Customer type:")).setBounds(10, 135, 150, 30);
+        resistancePanel.add(customerTypeComboBox).setBounds(10, 160, 150, 30);
+
+        add(resistancePanel);
+        //-----------------/Resistance panel-----------------
     }
 
 
