@@ -13,8 +13,7 @@ public abstract class Customer {
     private DecimalFormat numberFormat;
     private Beer currentBeer;
     private boolean isRemoved;
-    private Image alive_image;
-    private Image dead_image;
+    private Image alive_image, dead_image;
     private int x, y;
     public abstract Beer chooseBeer(List<Beer> beers);
 
