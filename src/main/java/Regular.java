@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Regular extends Customer {
     public Regular(String name, double resistance, int x, int y) {
-        super(name, resistance, x, y, Color.DARK_GRAY);
+        super(name, "graphics/pijak/pijak", resistance, x, y);
     }
 
     @Override
