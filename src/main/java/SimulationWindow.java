@@ -1,3 +1,4 @@
+import javax.imageio.plugins.tiff.ExifGPSTagSet;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -181,9 +182,18 @@ public class SimulationWindow extends JFrame {
                         runSimulationWithGUI();
                         repaint();
                         add(drawAll);
+                        if (finalI >= maxIterations - 1) {
+                            JLabel endButton = new JLabel("End of the simulation!!!");
+                            endButton.setFont(new Font("Arial", Font.BOLD, 22));
+                            endButton.setFocusable(false);
+                            endButton.setBounds(350, 800, 300, 50);
+
+                            add(endButton);
+                        }
                     }
                 };
                 timer.schedule(newTask, i * delaying * 1000);
+
             }
         }
     }

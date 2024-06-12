@@ -113,8 +113,8 @@ public class SettingsWindow extends JFrame {
 
         //----------------------manualMode----------------------
         JRadioButton manualMode = new JRadioButton("Manual mode");
-        manualMode.setSelected(true);
         manualMode.setBounds(10, 620, 500, 30);
+        manualMode.setSelected(true);
         manualMode.setFont(new Font("Arial", Font.BOLD, 16));
         manualMode.setFocusable(false);
         add(manualMode);
@@ -220,12 +220,11 @@ public class SettingsWindow extends JFrame {
         resistancePanel.setLayout(null);
         resistancePanel.setBounds(10, 350, 350, 200);
         resistancePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        resistancePanel.setBackground(Color.lightGray); //?????
 
-        resistancePanel.add(new JLabel("Min resistance:")).setBounds(10, 0, 150, 30);
-        resistancePanel.add(minResistanceSlider).setBounds(10, 25, 325, 40);
-        resistancePanel.add(new JLabel("Max resistance:")).setBounds(10, 60, 150, 30);
-        resistancePanel.add(maxResistanceSlider).setBounds(10, 85, 325, 40);
+        resistancePanel.add(new JLabel("Min resistance:")).setBounds(10, 5, 150, 30);
+        resistancePanel.add(minResistanceSlider).setBounds(10, 30, 325, 50);
+        resistancePanel.add(new JLabel("Max resistance:")).setBounds(10, 70, 150, 30);
+        resistancePanel.add(maxResistanceSlider).setBounds(10, 95, 325, 50);
 
         resistancePanel.add(new JLabel("Customer type:")).setBounds(10, 135, 150, 30);
         resistancePanel.add(customerTypeComboBox).setBounds(10, 160, 150, 30);
@@ -318,5 +317,4 @@ public class SettingsWindow extends JFrame {
             System.err.println("Error deleting CSV files: " + e.getMessage());
         }
     }
-
 }
