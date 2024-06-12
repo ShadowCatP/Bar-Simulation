@@ -220,7 +220,7 @@ public class SettingsWindow extends JFrame {
         resistancePanel.setLayout(null);
         resistancePanel.setBounds(10, 350, 350, 200);
         resistancePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        resistancePanel.setBackground(Color.lightGray);
+        resistancePanel.setBackground(Color.lightGray); //?????
 
         resistancePanel.add(new JLabel("Min resistance:")).setBounds(10, 0, 150, 30);
         resistancePanel.add(minResistanceSlider).setBounds(10, 25, 325, 40);

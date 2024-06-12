@@ -108,32 +108,28 @@ public class SimulationWindow extends JFrame {
 
         //------------------------RegularsLabel-------------------------------
         JLabel RegularsLabel = new JLabel("<html>Regular<br>drinkers</html>");
-        RegularsLabel.setBounds(1050, -25, 500, 200);
-        RegularsLabel.setForeground(Color.DARK_GRAY);
+        RegularsLabel.setBounds(1050, -15, 500, 200);
         RegularsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(RegularsLabel);
         //------------------------/RegularsLabel-------------------------------
 
         //------------------------ConnoisseursLabel-------------------------------
         JLabel ConnoisseursLabel = new JLabel("<html>Connoisseur<br>drinkers</html>");
-        ConnoisseursLabel.setBounds(1050, 170, 500, 200);
-        ConnoisseursLabel.setForeground(Color.PINK);
+        ConnoisseursLabel.setBounds(1050, 180, 500, 200);
         ConnoisseursLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(ConnoisseursLabel);
         //------------------------/ConnoisseursLabel-------------------------------
 
         //------------------------DrunkardsLabel-------------------------------
         JLabel DrunkardsLabel = new JLabel("<html>Drunkard<br>drinkers</html>");
-        DrunkardsLabel.setBounds(1050, 370, 500, 200);
-        DrunkardsLabel.setForeground(Color.ORANGE);
+        DrunkardsLabel.setBounds(1050, 385, 500, 200);
         DrunkardsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(DrunkardsLabel);
         //------------------------/DrunkardsLabel-------------------------------
 
         //------------------------OccasionalDrinkersLabel-------------------------------
         JLabel OccasionalDrinkersLabel = new JLabel("<html>Occasional<br>drinkers</html>");
-        OccasionalDrinkersLabel.setBounds(1050, 570, 500, 200);
-        OccasionalDrinkersLabel.setForeground(Color.BLUE);
+        OccasionalDrinkersLabel.setBounds(1050, 585, 500, 200);
         OccasionalDrinkersLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(OccasionalDrinkersLabel);
         //------------------------/OccasionalDrinkersLabel-------------------------------
@@ -197,8 +193,8 @@ public class SimulationWindow extends JFrame {
 
         int i = 0;
         for (Customer customer : customers) {
-            drunkennessLabels.get(i).setBounds(customer.getX() - 20, customer.getY() - 50, 150, 50);
-            choosenBeers.get(i).setBounds(customer.getX() - 20, customer.getY() + 40, 150, 50);
+            drunkennessLabels.get(i).setBounds(customer.getX() - 10, customer.getY() - 50, 150, 50);
+            choosenBeers.get(i).setBounds(customer.getX() - 20, customer.getY() + 55, 150, 50);
 
             double drunkenness = customer.getDrunkenness();
             if (drunkenness > 100.0) {
@@ -206,7 +202,6 @@ public class SimulationWindow extends JFrame {
             }
 
             drunkennessLabels.get(i).setText("<html>drunkenness<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + drunkenness + "</html>");
-
             choosenBeers.get(i).setText("     " + customer.getCurrentBeer().getName());
 
             i++;
