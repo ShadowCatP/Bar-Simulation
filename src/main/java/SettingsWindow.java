@@ -44,6 +44,7 @@ public class SettingsWindow extends JFrame {
     private HashMap<String, JSlider> beerStrengthSliders;
     private HashMap<String, Integer> beerStrengths;
     private JPanel resistancePanel;
+    private static final int MAX_ITERATIONS = 20;
 
     SettingsWindow() {
         setTitle("Settings");
@@ -271,7 +272,7 @@ public class SettingsWindow extends JFrame {
                             // I dunno how to make it better, but i know that is possible
                             List<Customer> customers = new ArrayList<>();
                             Random rand = new Random();
-                            for (int i = 0; i < 6; i++) {
+                            for (int i = 0; i < 10; i++) {
                                 double resistance = minRegResistance + (maxRegResistance - minRegResistance) * rand.nextDouble();
                                 customers.add(new Regular("Regular_" + (i + 1), resistance, 0, 0));
                                 resistance = minConnResistance + (maxConnResistance - minConnResistance) * rand.nextDouble();
@@ -284,7 +285,7 @@ public class SettingsWindow extends JFrame {
 
                             Simulation simulation = new Simulation(customers, beers, simulationNumber);
 
-                            for (int i = 0; i < 20; i++) {
+                            for (int i = 0; i < MAX_ITERATIONS; i++) {
                                 simulation.run();
                             }
 
