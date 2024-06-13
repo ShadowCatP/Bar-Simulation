@@ -1,11 +1,8 @@
-import javax.imageio.plugins.tiff.ExifGPSTagSet;
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.List;
-import java.util.Random;
+import java.util.Timer;
+import java.util.*;
 
 public class SimulationWindow extends JFrame {
     private JTextArea textArea;
@@ -19,8 +16,8 @@ public class SimulationWindow extends JFrame {
     List<JLabel> choosenBeers;
     int maxIterations;
     int currIteration = 1;
-    int delaying;
-    public SimulationWindow(int maxIterations_, int delaying_,
+    double delaying;
+    public SimulationWindow(int maxIterations_, double delaying_,
                             int minRegResistance_, int minConnResistance_, int minDrunkardResistance_, int minOccasionalDrinkerResistance_,
                             int maxRegResistance_, int maxConnResistance_, int maxDrunkardResistance_, int maxOccasionalDrinkerResistance_,
                             HashMap<String, Integer> beerStrengths) {
@@ -192,7 +189,7 @@ public class SimulationWindow extends JFrame {
                         }
                     }
                 };
-                timer.schedule(newTask, i * delaying * 1000);
+                timer.schedule(newTask, (long) (i * delaying * 1000));
 
             }
         }

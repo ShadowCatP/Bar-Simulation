@@ -36,7 +36,7 @@ public class HelpWindow extends JFrame {
         delayBetweenItersLabel.setBounds(150, 170, 400, 30);
         delayBetweenItersLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(delayBetweenItersLabel);
-        //----------------------/numberOfItersLabel-----------------------
+        //----------------------/delayBetweenItersLabel-----------------------
 
         //----------------------delayingBetweenItersField-----------------------
         delayingBetweenItersField = new JTextField("3");
@@ -71,17 +71,17 @@ public class HelpWindow extends JFrame {
             return 20;
         }
     }
-    private int getDelayBetweenIters(){
+    private double getDelayBetweenIters(){
         try {
-            int iterations = Integer.parseInt(delayingBetweenItersField.getText());
+            double iterations = Double.parseDouble(delayingBetweenItersField.getText());
 
-            if (iterations > 10 || iterations < 1) {
-                return 10;
+            if (iterations > 10.0 || iterations < 0.0) {
+                return 10.0;
             } else {
                 return iterations;
             }
         } catch(NumberFormatException e){
-            return 3;
+            return 3.0;
         }
     }
 }
