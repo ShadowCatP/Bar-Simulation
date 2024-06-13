@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CSVWriter {
 
-    private static final String CSV_HEADER = "Iteration,Customer ID,Customer Type,Beer Type,Drunkenness Level,Resistance Level,Remaining Customers,Return Status";
+    private static final String CSV_HEADER = "Iteration,Customer ID,Customer Type,Beer Type,Drunkenness Level,Resistance Level,Return Status";
     private FileWriter fileWriter;
 
     public CSVWriter(String fileName) throws IOException {
@@ -20,7 +20,7 @@ public class CSVWriter {
         fileWriter.append("\n");
     }
 
-    public void writeData (int iteration, Customer customer, int remainingCustomers) throws IOException {
+    public void writeData (int iteration, Customer customer) throws IOException {
         fileWriter.append(String.valueOf(iteration));
         fileWriter.append(",");
         fileWriter.append(customer.getName());
@@ -32,8 +32,6 @@ public class CSVWriter {
         fileWriter.append(String.valueOf(customer.getDrunkenness()));
         fileWriter.append(",");
         fileWriter.append(String.valueOf(customer.getResistance()));
-        fileWriter.append(",");
-        fileWriter.append(String.valueOf(remainingCustomers));
         fileWriter.append(",");
         if (customer instanceof Drunkard) {
             Drunkard drunkard = (Drunkard) customer;

@@ -29,7 +29,7 @@ public class Simulation {
             }
 
             try {
-                csvWriter.writeData(currIter, customer, customers.size());
+                csvWriter.writeData(currIter, customer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
