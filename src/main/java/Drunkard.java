@@ -7,7 +7,7 @@ public class Drunkard extends Customer {
     private boolean removed = false;
     private boolean hasReturned = false;
     public Drunkard(String name, double resistance, int x, int y) {
-        super(name, resistance, x, y, Color.orange);
+        super(name,"graphics/pijak pijakow/pijak pijakow", resistance, x, y);
     }
 
     @Override
@@ -15,7 +15,7 @@ public class Drunkard extends Customer {
         if (removed) {
             counter++;
             if (counter >= 4 && !hasReturned) {
-                color = Color.orange;
+                //color = Color.orange;
                 removed = false;
                 hasReturned = true;
                 counter = 0;
@@ -42,7 +42,7 @@ public class Drunkard extends Customer {
            remove();
            if (!hasReturned)
                 setDrunkenness(0.0);
-           color = Color.red;
+           //color = Color.red;
         }
     }
 

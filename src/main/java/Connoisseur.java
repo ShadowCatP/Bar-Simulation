@@ -7,7 +7,7 @@ public class Connoisseur extends Customer {
     private int sameBeerCount = 1;
 
     public Connoisseur(String name, double resistance, int x, int y) {
-        super(name, resistance, x, y, Color.pink);
+        super(name, "graphics/smakosz/smakosz", resistance, x, y);
     }
 
     @Override
