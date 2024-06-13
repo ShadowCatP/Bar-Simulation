@@ -32,7 +32,7 @@ public class HelpWindow extends JFrame {
         //----------------------/numberOfItersField-----------------------
 
         //----------------------delayBetweenItersLabel-----------------------
-        JLabel delayBetweenItersLabel = new JLabel("Enter delay between iterations (in seconds):");
+        JLabel delayBetweenItersLabel = new JLabel("Enter delay between iterations (in whole seconds):");
         delayBetweenItersLabel.setBounds(150, 170, 400, 30);
         delayBetweenItersLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(delayBetweenItersLabel);
