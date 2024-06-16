@@ -156,19 +156,19 @@ public class SimulationWindow extends JFrame {
         y = startY;
 
 
-        DrawCustomers drawAll = new DrawCustomers(customers);
+        DrawCustomers drawAll = new DrawCustomers(customers, "graphics/background/planks.png");
 
         startButton.setEnabled(false);
+
+        drawAll.setBounds(0, 0, 1030, 800);
 
         if (maxIterations == 0) {
             nextIterButton.setEnabled(true);
             runSimulationWithGUI();
-            drawAll.setBounds(0, 0, 1000, 800);
             repaint();
             add(drawAll);
         }
         else {
-            drawAll.setBounds(0, 0, 1000, 800);
             Timer timer = new Timer();
             for (int i = 0; i < maxIterations; i++) {
                 final int finalI = i;
@@ -210,6 +210,9 @@ public class SimulationWindow extends JFrame {
 
             drunkennessLabels.get(i).setText("<html>drunkenness<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + drunkenness + "</html>");
             choosenBeers.get(i).setText("     " + customer.getCurrentBeer().getName());
+
+            drunkennessLabels.get(i).setForeground(Color.white);
+            choosenBeers.get(i).setForeground(Color.white);
 
             i++;
         }
